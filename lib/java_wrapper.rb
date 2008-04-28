@@ -1,13 +1,12 @@
 require 'rjb'
-require 'facets/memoize'
 
 class JavaWrapper
   def initialize(classpath)
-    Rjb::load(classpath.join(':'))
+    @classpath = classpath
   end
   
   def import(classname)
-    clazz = Rjb.import(classname)
+    Rjb.load(@classpath.join(':'))
+    Rjb.import(classname)
   end
-  memoize :import 
 end
