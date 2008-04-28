@@ -2,6 +2,7 @@ require 'lib/core'
 require 'lib/java_wrapper'
 require 'lib/clazz'
 require 'lib/class_monitor'
+require 'lib/reload_tester'
 require 'lib/testng'
 require 'lib/autotest'
 
@@ -18,6 +19,8 @@ classpath=[
   SRC_DIR,
   '/Users/aesterline/Projects/conduit/mvc/target/test/classes/']
 
-java_wrapper = JavaWrapper.new(classpath)
-autotest = AutoTest.new(SRC_DIR, TestNG.new(java_wrapper, Clazz.new(java_wrapper)))
+java_wrapper = JavaWrapper.new
+tester = TestNG.new(java_wrapper, Clazz.new(java_wrapper))
+
+autotest = AutoTest.new(SRC_DIR, ReloadTester.new(tester, java_wrapper, classpath))
 autotest.run

@@ -7,6 +7,7 @@ class Clazz
     begin
       @java_wrapper.import('java.lang.Class').forName(classname)
     rescue
+      puts classname
       nil
     end
   end
