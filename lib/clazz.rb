@@ -1,3 +1,5 @@
+require 'facets/memoize'
+
 class Clazz
   def initialize(java_wrapper)
     @java_wrapper = java_wrapper
