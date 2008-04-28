@@ -1,6 +1,6 @@
 require 'lib/java_wrapper'
 require 'lib/clazz'
-require 'lib/tester'
+require 'lib/testng'
 
 classpath=[
   '/Users/aesterline/.m2/repository/org/jmock/jmock/2.4.0/jmock-2.4.0.jar',
