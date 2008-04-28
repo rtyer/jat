@@ -10,9 +10,17 @@ class TestNG
     return if classes.empty?
     
     testng = @java_wrapper.import('org.testng.TestNG').new
+    testng.setVerbose(0)
+    testng.setUseDefaultListeners(false)
+    testng.addListener(Rjb.bind(TestListener.new, 'org.testng.ITestListener'))
     testng.setTestClasses(classes)
-    testng.addListener(@java_wrapper.import('org.testng.reporters.DotTestListener').new)
     testng.run
   end
   
+end
+
+class TestListener
+  def method_missing(method, *args)
+    puts method
+  end
 end
