@@ -7,15 +7,20 @@ public class TestNGTestAsserter implements TestAsserter
 {
     public boolean isTest(Class clazz)
     {
-        Class<Test> annotationClass = Test.class;
+        return isAnnotationDeclaredAtTheClassLevel(clazz) || isAnnotationDeclaredAtTheMethodLevel(clazz);
+    }
 
-        if(clazz.getAnnotation(annotationClass) != null) return true;
+    private boolean isAnnotationDeclaredAtTheClassLevel(Class clazz)
+    {
+        return clazz.getAnnotation(Test.class) != null;
+    }
 
+    private boolean isAnnotationDeclaredAtTheMethodLevel(Class clazz)
+    {
         for(Method method : clazz.getMethods())
         {
-            if(method.getAnnotation(annotationClass) != null) return true;
+            if(method.getAnnotation(Test.class) != null) return true;
         }
-
         return false;
     }
 }
