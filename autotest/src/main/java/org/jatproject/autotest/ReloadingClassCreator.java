@@ -4,8 +4,8 @@ import java.io.File;
 
 public class ReloadingClassCreator implements ClassCreator
 {
-    SearchPath path;
-    AutoTestClassLoader loader;
+    private SearchPath path;
+    private AutoTestClassLoader loader;
 
     public ReloadingClassCreator(SearchPath path, AutoTestClassLoader loader)
     {
