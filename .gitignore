@@ -1,1 +1,6 @@
 test-output
+target
+reports
+*iws
+*ipr
+*iml
