@@ -19,5 +19,6 @@ public class TestNGTester implements Tester
     public void runTests(Class... classes)
     {
         testng.setTestClasses(mapper.findTestsFor(classes));
+        testng.run();
     }
 }
