@@ -4,7 +4,7 @@ VERSION_NUMBER = '0.1'
 
 JMOCK = 'org.jmock:jmock:jar:2.4.0'
 HAMCREST = group('hamcrest-core', 'hamcrest-library', :under => 'org.hamcrest', :version => '1.1')
-TESTNG = 'org.testng:testng:jar:5.8'
+TESTNG = 'org.testng:testng:jar:jdk15:5.7'
 CGLIB = 'cglib:cglib-nodep:jar:2.1_3'
 OBJ = 'org.objenesis:objenesis:jar:1.1'
 
