@@ -7,6 +7,11 @@ public class TestNGTester implements Tester
     private TestMapper mapper;
     private TestNG testng;
 
+    public TestNGTester()
+    {
+        this(new TestNG(), new SimpleTestMapper(new TestNGTestAsserter(), ClassLoader.getSystemClassLoader()));
+    }
+
     public TestNGTester(TestNG testng, TestMapper mapper)
     {
         this.mapper = mapper;
