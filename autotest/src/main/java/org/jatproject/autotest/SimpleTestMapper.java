@@ -34,8 +34,7 @@ public class SimpleTestMapper implements TestMapper
 
         }
         catch(ClassNotFoundException e)
-        {
-            
+        {            
         }
 
         return testClasses.toArray(new Class[testClasses.size()]);

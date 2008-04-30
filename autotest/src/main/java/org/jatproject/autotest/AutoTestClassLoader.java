@@ -7,14 +7,14 @@ import java.io.IOException;
 
 public class AutoTestClassLoader extends ClassLoader
 {
-    private SearchPath reloadingClassPath;
+    private ClassPath reloadingClassPath;
 
-    public AutoTestClassLoader(SearchPath reloadingClassPath)
+    public AutoTestClassLoader(ClassPath reloadingClassPath)
     {
         this(ClassLoader.getSystemClassLoader(), reloadingClassPath);
     }
 
-    public AutoTestClassLoader(ClassLoader classLoader, SearchPath reloadingClassPath)
+    public AutoTestClassLoader(ClassLoader classLoader, ClassPath reloadingClassPath)
     {
         super(classLoader);
         this.reloadingClassPath = reloadingClassPath;

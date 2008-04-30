@@ -1,7 +1,8 @@
 package org.jatproject.autotest;
 
-import java.lang.reflect.Method;
 import org.testng.annotations.Test;
+
+import java.lang.reflect.Method;
 
 public class TestNGTestAsserter implements TestAsserter
 {

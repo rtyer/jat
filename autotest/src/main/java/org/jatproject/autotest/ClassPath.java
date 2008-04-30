@@ -2,11 +2,11 @@ package org.jatproject.autotest;
 
 import java.io.File;
 
-public class SearchPath
+public class ClassPath
 {
     private File[] pathDirectories;
 
-    public SearchPath(File[] pathDirectories)
+    public ClassPath(File[] pathDirectories)
     {
         this.pathDirectories = pathDirectories;
     }
