@@ -33,4 +33,9 @@ public class ClassFiles
 
         return classes.toArray(new Class[files.size()]);
     }
+
+    public boolean isEmpty()
+    {
+        return files.isEmpty();
+    }
 }
