@@ -1,18 +1,18 @@
 package org.jatproject.autotest.testng;
 
-import org.testng.TestNG;
-import org.jatproject.autotest.Tester;
+import org.jatproject.autotest.ClassFiles;
 import org.jatproject.autotest.TestMapper;
-import org.jatproject.autotest.SimpleTestMapper;
+import org.jatproject.autotest.Tester;
+import org.testng.TestNG;
 
 public class TestNGTester implements Tester
 {
     private TestMapper mapper;
     private TestNG testng;
 
-    public TestNGTester()
+    public TestNGTester(TestMapper mapper)
     {
-        this(new TestNG(), new SimpleTestMapper(new TestNGTestAsserter(), ClassLoader.getSystemClassLoader()));
+        this(new TestNG(), mapper);
     }
 
     public TestNGTester(TestNG testng, TestMapper mapper)
@@ -24,7 +24,7 @@ public class TestNGTester implements Tester
         testng.setUseDefaultListeners(false);
     }
 
-    public void runTests(Class... classes)
+    public void runTests(ClassFiles classes)
     {
         testng.setTestClasses(mapper.findTestsFor(classes));
         testng.run();

@@ -1,13 +1,12 @@
 package org.jatproject.autotest.testng;
 
+import org.jatproject.autotest.ClassFileTest;
+import org.jatproject.autotest.TestAsserter;
+import org.jatproject.autotest.Tester;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.jatproject.autotest.testng.TestNGTestAsserter;
-import org.jatproject.autotest.TestAsserter;
-import org.jatproject.autotest.Tester;
-import org.jatproject.autotest.AutoTestTest;
 
 public class TestNGTestAsserterTest
 {
@@ -28,7 +27,7 @@ public class TestNGTestAsserterTest
     @Test
     public void testAnnotationOnClassShouldReturnTrue()
     {
-        assertTrue(asserter.isTest(AutoTestTest.class));
+        assertTrue(asserter.isTest(ClassFileTest.class));
     }
 
     @Test

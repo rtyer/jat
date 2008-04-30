@@ -1,38 +1,35 @@
 package org.jatproject.autotest;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
 import java.io.IOException;
 
 public class AutoTestClassLoader extends ClassLoader
 {
-    private ClassPath reloadingClassPath;
+    private ClassPath classpath;
 
-    public AutoTestClassLoader(ClassPath reloadingClassPath)
+    public AutoTestClassLoader(ClassPath classpath)
     {
-        this(ClassLoader.getSystemClassLoader(), reloadingClassPath);
+        this(ClassLoader.getSystemClassLoader(), classpath);
     }
 
-    public AutoTestClassLoader(ClassLoader classLoader, ClassPath reloadingClassPath)
+    public AutoTestClassLoader(ClassLoader classLoader, ClassPath classpath)
     {
         super(classLoader);
-        this.reloadingClassPath = reloadingClassPath;
+        this.classpath = classpath;
     }
 
     @Override
-    public Class loadClass(String s) throws ClassNotFoundException
+    public Class loadClass(String classname) throws ClassNotFoundException
     {
-        return loadClass(s, reloadingClassPath.find(s.replace('.', '/') + ".class"));
+        return loadClass(classname, classpath.find(classname));
     }
 
-    public Class loadClass(String className, File file) throws ClassNotFoundException
+    public Class loadClass(String className, ClassFile file) throws ClassNotFoundException
     {
         if(file == null) return findSystemClass(className);
         
         try
         {
-            byte[] contents = FileUtils.readFileToByteArray(file);
+            byte[] contents = file.getContents();
             return defineClass(className, contents, 0, contents.length);
         }
         catch (IOException e)

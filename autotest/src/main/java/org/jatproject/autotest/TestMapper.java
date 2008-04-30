@@ -2,5 +2,5 @@ package org.jatproject.autotest;
 
 public interface TestMapper
 {
-    Class[] findTestsFor(Class... changeClasses);
+    Class[] findTestsFor(ClassFiles changeClasses);
 }

@@ -1,5 +1,7 @@
 package org.jatproject.autotest.testng;
 
+import org.jatproject.autotest.ClassFiles;
+import org.jatproject.autotest.TestMapper;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
@@ -7,8 +9,6 @@ import org.testng.TestNG;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.jatproject.autotest.testng.TestNGTester;
-import org.jatproject.autotest.TestMapper;
 
 @Test
 public class TestNGTesterTest
@@ -50,7 +50,7 @@ public class TestNGTesterTest
         final TestNG testng = mockery.mock(TestNG.class);
         final TestMapper mapper = mockery.mock(TestMapper.class);
 
-        final Class[] changeClasses = {TestNG.class, TestMapper.class};
+        final ClassFiles changeClasses = new ClassFiles();
         final Class[] testClasses = {Mockery.class};
 
         mockery.checking(new Expectations()
