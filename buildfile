@@ -7,6 +7,8 @@ HAMCREST = group('hamcrest-core', 'hamcrest-library', :under => 'org.hamcrest', 
 TESTNG = 'org.testng:testng:jar:jdk15:5.7'
 CGLIB = 'cglib:cglib-nodep:jar:2.1_3'
 OBJ = 'org.objenesis:objenesis:jar:1.1'
+COMMONS = 'commons-io:commons-io:jar:1.4'
+
 
 repositories.remote << 'http://www.ibiblio.org/maven2'
 repositories.remote << 'http://public.planetmirror.com/pub/maven2'
@@ -20,8 +22,8 @@ define 'jat' do
    
    desc 'Auto Testing Framework for Java'
    define 'autotest' do
-     compile.with TESTNG
-     test.with TESTNG, JMOCK, HAMCREST, CGLIB, OBJ
+     compile.with TESTNG, COMMONS
+     test.with JMOCK, HAMCREST, CGLIB, OBJ
      
      package :jar
    end   

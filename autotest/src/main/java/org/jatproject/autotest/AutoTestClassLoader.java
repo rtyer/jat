@@ -1,32 +1,39 @@
 package org.jatproject.autotest;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 
 public class AutoTestClassLoader extends ClassLoader
 {
-    public Class defineClass(String className, File file) throws ClassNotFoundException
+    private SearchPath reloadingClassPath;
+
+    public AutoTestClassLoader(SearchPath reloadingClassPath)
     {
+        this(ClassLoader.getSystemClassLoader(), reloadingClassPath);
+    }
+
+    public AutoTestClassLoader(ClassLoader classLoader, SearchPath reloadingClassPath)
+    {
+        super(classLoader);
+        this.reloadingClassPath = reloadingClassPath;
+    }
+
+    @Override
+    public Class loadClass(String s) throws ClassNotFoundException
+    {
+        return loadClass(s, reloadingClassPath.find(s.replace('.', '/') + ".class"));
+    }
+
+    public Class loadClass(String className, File file) throws ClassNotFoundException
+    {
+        if(file == null) return findSystemClass(className);
+        
         try
         {
-            FileChannel channel = new FileInputStream(file).getChannel();
-
-            try
-            {
-                int size = (int) channel.size();
-
-                ByteBuffer buffer = ByteBuffer.allocate(size);
-                channel.read(buffer);
-
-                return defineClass(className, buffer.array(), 0, size);
-            }
-            finally
-            {
-                channel.close();
-            }
+            byte[] contents = FileUtils.readFileToByteArray(file);
+            return defineClass(className, contents, 0, contents.length);
         }
         catch (IOException e)
         {
