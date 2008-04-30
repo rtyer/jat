@@ -1,8 +1,11 @@
 package org.jatproject.autotest;
 
 import java.io.File;
-import java.io.FileFilter;
-import org.apache.commons.io.filefilter.AgeFileFilter;
+import java.util.Collection;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.apache.commons.io.filefilter.IOFileFilter;
 
 public class ClassPath
 {
@@ -28,12 +31,14 @@ public class ClassPath
 
     public ClassFiles findChangesSince(long time)
     {
+        IOFileFilter filter = FileFilterUtils.ageFileFilter(time, false);
+
         ClassFiles files = new ClassFiles();
 
         for(File directory : pathDirectories)
         {
-            File[] changes = directory.listFiles((FileFilter)new AgeFileFilter(time, false));
-            files.addAll(directory, changes);
+            Collection changes = FileUtils.listFiles(directory, filter, TrueFileFilter.INSTANCE);
+            files.addAll(directory, FileUtils.convertFileCollectionToFileArray(changes));
         }
 
         return files;
