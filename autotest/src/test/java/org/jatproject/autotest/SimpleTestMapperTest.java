@@ -7,6 +7,8 @@ import static org.testng.AssertJUnit.*;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.jatproject.autotest.testng.TestNGTester;
+import org.jatproject.autotest.testng.TestNGTesterTest;
 
 @Test
 public class SimpleTestMapperTest

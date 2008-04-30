@@ -1,9 +1,13 @@
-package org.jatproject.autotest;
+package org.jatproject.autotest.testng;
 
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.jatproject.autotest.testng.TestNGTestAsserter;
+import org.jatproject.autotest.TestAsserter;
+import org.jatproject.autotest.Tester;
+import org.jatproject.autotest.AutoTestTest;
 
 public class TestNGTestAsserterTest
 {

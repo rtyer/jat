@@ -1,6 +1,7 @@
-package org.jatproject.autotest;
+package org.jatproject.autotest.testng;
 
 import org.testng.annotations.Test;
+import org.jatproject.autotest.TestAsserter;
 
 import java.lang.reflect.Method;
 
