@@ -24,7 +24,10 @@ define 'jat' do
    define 'autotest' do
      compile.with TESTNG, COMMONS
      test.with JMOCK, HAMCREST, CGLIB, OBJ
-     
      package :jar
+     
+     task('run', :test) do
+       Java::Commands.java('org.jatproject.autotest.AutoTestRunner', :classpath => test.dependencies)
+     end
    end   
 end
