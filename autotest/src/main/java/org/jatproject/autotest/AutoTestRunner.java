@@ -23,8 +23,6 @@ public class AutoTestRunner extends TimerTask
         ClassFiles classpathChanges = classpath.findChangesSince(lastRunTime);
         lastRunTime = System.currentTimeMillis();
 
-        if(classpathChanges.isEmpty()) return;
-
         AutoTestClassLoader loader = new AutoTestClassLoader(classpath);
         TestMapper mapper = new SimpleTestMapper(new TestNGTestAsserter(), loader);
         new TestNGTester(mapper).runTests(classpathChanges);

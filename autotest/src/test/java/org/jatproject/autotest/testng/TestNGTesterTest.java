@@ -65,4 +65,22 @@ public class TestNGTesterTest
 
         new TestNGTester(testng, mapper).runTests(changeClasses);
     }
+
+    public void shouldNotRunWhenAnEmptyTestClassIsReturnedFromTestMapper()
+    {
+        final TestNG testng = mockery.mock(TestNG.class);
+        final TestMapper mapper = mockery.mock(TestMapper.class);
+
+        final ClassFiles changeClasses = new ClassFiles();
+
+        mockery.checking(new Expectations()
+        {{
+            one(testng).setVerbose(0);
+            one(testng).setUseDefaultListeners(false);
+
+            one(mapper).findTestsFor(changeClasses);will(returnValue(new Class[0]));
+        }});
+
+        new TestNGTester(testng, mapper).runTests(changeClasses);
+    }
 }
