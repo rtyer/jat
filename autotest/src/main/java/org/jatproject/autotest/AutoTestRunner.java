@@ -26,11 +26,12 @@ public class AutoTestRunner extends TimerTask
         ClassFiles classpathChanges = classpath.findChangesSince(lastRunTime);
         lastRunTime = System.currentTimeMillis();
 
-        TestMapper mapper = new SimpleTestMapper(loader);
+        TestMapper mapper = new SimpleTestMapper(classpath);
         ArrayList<Class> testClasses = new ArrayList<Class>();
         for(ClassFile clazz : classpathChanges)
         {
-            testClasses.addAll(Arrays.asList(mapper.findTestsFor(clazz)));
+            Class[] tests = mapper.findTestsFor(clazz).toClassArray(loader);
+            testClasses.addAll(Arrays.asList(tests));
         }
 
 

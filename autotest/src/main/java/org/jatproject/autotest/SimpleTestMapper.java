@@ -2,32 +2,24 @@ package org.jatproject.autotest;
 
 public class SimpleTestMapper implements TestMapper
 {
-    private AutoTestClassLoader loader;
+    private ClassPath classpath;
 
-    public SimpleTestMapper(AutoTestClassLoader loader)
+    public SimpleTestMapper(ClassPath classpath)
     {
-        this.loader = loader;
+        this.classpath = classpath;
     }
 
-    public Class[] findTestsFor(ClassFile changedClass)
+    public ClassFiles findTestsFor(ClassFile changedClass)
     {
-        try
-        {
-            String className = changedClass.getClassName();
-            Class clazz = loader.loadClass(className, changedClass);
+        String className = changedClass.getClassName();
 
-            if(className.endsWith("Test"))
-            {
-                return new Class[]{clazz};
-            }
-            else
-            {
-                return new Class[]{loader.loadClass(className + "Test")};
-            }
-        }
-        catch(ClassNotFoundException e)
+        if(className.endsWith("Test"))
         {
-            return new Class[0];
+            return new ClassFiles(changedClass);
+        }
+        else
+        {
+            return new ClassFiles(classpath.find(className + "Test"));
         }
     }
 }

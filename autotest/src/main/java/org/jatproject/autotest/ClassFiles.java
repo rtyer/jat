@@ -2,12 +2,18 @@ package org.jatproject.autotest;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 public class ClassFiles implements Iterable<ClassFile>
 {
     private List<ClassFile> files = new ArrayList<ClassFile>();
+
+    public ClassFiles(ClassFile... files)
+    {
+        this.files.addAll(Arrays.asList(files));
+    }
 
     public void addAll(File baseDirectory, File[] classFiles)
     {
@@ -38,5 +44,10 @@ public class ClassFiles implements Iterable<ClassFile>
     public Iterator<ClassFile> iterator()
     {
         return files.iterator();
+    }
+
+    public ClassFile get(int index)
+    {
+        return files.get(index);
     }
 }
