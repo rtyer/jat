@@ -1,6 +1,7 @@
 package org.jatproject.autotest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SimpleTestMapper implements TestMapper
 {
@@ -17,27 +18,33 @@ public class SimpleTestMapper implements TestMapper
     {
         ArrayList<Class> testClasses = new ArrayList<Class>();
 
-        try
+        for(ClassFile clazz : changedClasses)
         {
-            Class[] classes = changedClasses.toClassArray(loader);
-            for(Class currentClass : classes)
-            {
-                if(asserter.isTest(currentClass))
-                {
-                    testClasses.add(currentClass);
-                }
-                else
-                {
-                    String className = currentClass.getName();
-                    testClasses.add(loader.loadClass(className + "Test"));
-                }
-            }
-
-        }
-        catch(ClassNotFoundException e)
-        {            
+            testClasses.addAll(Arrays.asList(findTestsFor(clazz)));
         }
 
         return testClasses.toArray(new Class[testClasses.size()]);
+    }
+
+    public Class[] findTestsFor(ClassFile changedClass)
+    {
+        try
+        {
+            String className = changedClass.getClassName();
+            Class clazz = loader.loadClass(className, changedClass);
+
+            if(asserter.isTest(clazz))
+            {
+                return new Class[]{clazz};
+            }
+            else
+            {
+                return new Class[]{loader.loadClass(className + "Test")};
+            }
+        }
+        catch(ClassNotFoundException e)
+        {
+            return new Class[0];
+        }
     }
 }
