@@ -26,10 +26,11 @@ public class AutoTestRunner extends TimerTask
 
         AutoTestClassLoader loader = new AutoTestClassLoader(classpath);
         TestMapper mapper = new SimpleTestMapper(new TestNGTestAsserter(), loader);
+        Class[] testClasses = mapper.findTestsFor(classpathChanges);
 
-        TestNGTester tester = new TestNGTester(mapper);
+        TestNGTester tester = new TestNGTester();
         tester.addTestListener(new ConsoleTestListener());
-        tester.runTests(classpathChanges);
+        tester.runTests(testClasses);
     }
 
     public static void main(String[] args)

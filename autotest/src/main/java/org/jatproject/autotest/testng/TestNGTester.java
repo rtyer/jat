@@ -1,24 +1,20 @@
 package org.jatproject.autotest.testng;
 
-import org.jatproject.autotest.ClassFiles;
-import org.jatproject.autotest.TestMapper;
-import org.jatproject.autotest.Tester;
 import org.jatproject.autotest.TestListener;
+import org.jatproject.autotest.Tester;
 import org.testng.TestNG;
 
 public class TestNGTester implements Tester
 {
-    private TestMapper mapper;
     private TestNG testng;
 
-    public TestNGTester(TestMapper mapper)
+    public TestNGTester()
     {
-        this(new TestNG(), mapper);
+        this(new TestNG());
     }
 
-    public TestNGTester(TestNG testng, TestMapper mapper)
+    public TestNGTester(TestNG testng)
     {
-        this.mapper = mapper;
         this.testng = testng;
 
         testng.setVerbose(0);
@@ -30,15 +26,12 @@ public class TestNGTester implements Tester
         testng.addListener(new TestNGTestListener(listener));
     }
 
-    public void runTests(ClassFiles classes)
+    public void runTests(Class... testClasses)
     {
-        Class[] testClasses = mapper.findTestsFor(classes);
-
         if(testClasses.length > 0)
         {
             testng.setTestClasses(testClasses);
             testng.run();
         }
-
     }
 }
