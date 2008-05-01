@@ -36,5 +36,5 @@ public class AutoTestClassLoader extends ClassLoader
         {
             throw new ClassNotFoundException(className);
         }
-    }
+    }    
 }

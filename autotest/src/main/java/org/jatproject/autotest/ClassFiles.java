@@ -3,8 +3,9 @@ package org.jatproject.autotest;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
-public class ClassFiles
+public class ClassFiles implements Iterable<ClassFile>
 {
     private List<ClassFile> files = new ArrayList<ClassFile>();
 
@@ -32,5 +33,10 @@ public class ClassFiles
         }
 
         return classes.toArray(new Class[files.size()]);
+    }
+
+    public Iterator<ClassFile> iterator()
+    {
+        return files.iterator();
     }
 }

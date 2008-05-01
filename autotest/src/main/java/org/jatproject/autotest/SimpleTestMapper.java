@@ -1,43 +1,33 @@
 package org.jatproject.autotest;
 
-import java.util.ArrayList;
-
 public class SimpleTestMapper implements TestMapper
 {
-    private TestAsserter asserter;
     private AutoTestClassLoader loader;
 
-    public SimpleTestMapper(TestAsserter asserter, AutoTestClassLoader loader)
+    public SimpleTestMapper(AutoTestClassLoader loader)
     {
-        this.asserter = asserter;
         this.loader = loader;
     }
 
-    public Class[] findTestsFor(ClassFiles changedClasses)
+    public Class[] findTestsFor(ClassFile changedClass)
     {
-        ArrayList<Class> testClasses = new ArrayList<Class>();
-
         try
         {
-            Class[] classes = changedClasses.toClassArray(loader);
-            for(Class currentClass : classes)
-            {
-                if(asserter.isTest(currentClass))
-                {
-                    testClasses.add(currentClass);
-                }
-                else
-                {
-                    String className = currentClass.getName();
-                    testClasses.add(loader.loadClass(className + "Test"));
-                }
-            }
+            String className = changedClass.getClassName();
+            Class clazz = loader.loadClass(className, changedClass);
 
+            if(className.endsWith("Test"))
+            {
+                return new Class[]{clazz};
+            }
+            else
+            {
+                return new Class[]{loader.loadClass(className + "Test")};
+            }
         }
         catch(ClassNotFoundException e)
-        {            
+        {
+            return new Class[0];
         }
-
-        return testClasses.toArray(new Class[testClasses.size()]);
     }
 }

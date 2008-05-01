@@ -1,8 +1,6 @@
 package org.jatproject.autotest.testng;
 
-import org.jatproject.autotest.ClassFiles;
 import org.jatproject.autotest.TestListener;
-import org.jatproject.autotest.TestMapper;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
@@ -44,46 +42,39 @@ public class TestNGTesterTest
             one(testng).setUseDefaultListeners(false);
         }});
 
-        new TestNGTester(testng, null);
+        new TestNGTester(testng);
     }
 
     public void shouldSetCorrectTestsToRunWhenRunTestsCalled()
     {
         final TestNG testng = mockery.mock(TestNG.class);
-        final TestMapper mapper = mockery.mock(TestMapper.class);
 
-        final ClassFiles changeClasses = new ClassFiles();
-        final Class[] testClasses = {Mockery.class};
+        final Class testClass = Mockery.class;
 
         mockery.checking(new Expectations()
         {{
             one(testng).setVerbose(0);
             one(testng).setUseDefaultListeners(false);
 
-            one(mapper).findTestsFor(changeClasses);will(returnValue(testClasses));
-            one(testng).setTestClasses(testClasses);
+            one(testng).setTestClasses(new Class[] {testClass});
             one(testng).run();
         }});
 
-        new TestNGTester(testng, mapper).runTests(changeClasses);
+        new TestNGTester(testng).runTests(testClass);
     }
 
-    public void shouldNotRunWhenAnEmptyTestClassIsReturnedFromTestMapper()
+    public void shouldNotRunWhenTestClassesIsEmpty()
     {
         final TestNG testng = mockery.mock(TestNG.class);
-        final TestMapper mapper = mockery.mock(TestMapper.class);
-
-        final ClassFiles changeClasses = new ClassFiles();
 
         mockery.checking(new Expectations()
         {{
             one(testng).setVerbose(0);
             one(testng).setUseDefaultListeners(false);
-
-            one(mapper).findTestsFor(changeClasses);will(returnValue(new Class[0]));
+            never(testng).run();
         }});
 
-        new TestNGTester(testng, mapper).runTests(changeClasses);
+        new TestNGTester(testng).runTests();
     }
 
     public void shouldAddTestNGListenerWhenTestListenerAdded()
@@ -98,7 +89,7 @@ public class TestNGTesterTest
             one(testng).addListener((ITestListener)with(a(TestNGTestListener.class)));
         }});
 
-        new TestNGTester(testng, null).addTestListener(listener);
+        new TestNGTester(testng).addTestListener(listener);
 
     }
 }

@@ -3,12 +3,11 @@ package org.jatproject.autotest;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
-import static org.testng.AssertJUnit.*;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertSame;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.jatproject.autotest.testng.TestNGTester;
-import org.jatproject.autotest.testng.TestNGTesterTest;
 
 @Test
 public class SimpleTestMapperTest
@@ -34,83 +33,59 @@ public class SimpleTestMapperTest
 
     public void nonTestClassShouldAppendTestToClassName() throws Exception
     {
-        final TestAsserter asserter = mockery.mock(TestAsserter.class);
         final AutoTestClassLoader loader = mockery.mock(AutoTestClassLoader.class);
-        final ClassFiles classes = mockery.mock(ClassFiles.class);
+        final ClassFile clazz = mockery.mock(ClassFile.class);
+        final String className = ClassFile.class.getName();
 
         mockery.checking(new Expectations()
         {{
-            one(classes).toClassArray(loader); will(returnValue(new Class[] {ClassFile.class}));
-            one(asserter).isTest(ClassFile.class); will(returnValue(false));
-            one(loader).loadClass(ClassFile.class.getName() + "Test"); will(returnValue(ClassFileTest.class));
+            one(clazz).getClassName();will(returnValue(className));
+            one(loader).loadClass(className, clazz);will(returnValue(ClassFile.class));
+            one(loader).loadClass(className + "Test"); will(returnValue(ClassFileTest.class));
         }});
 
-        TestMapper mapper = new SimpleTestMapper(asserter, loader);
-        Class[] tests = mapper.findTestsFor(classes);
+        SimpleTestMapper mapper = new SimpleTestMapper(loader);
+        Class[] tests = mapper.findTestsFor(clazz);
 
         assertSame(ClassFileTest.class, tests[0]);
     }
 
-    public void testClassShouldJustReturnTheClass()
+    public void testClassShouldJustReturnTheClass() throws Exception
     {
-        final TestAsserter asserter = mockery.mock(TestAsserter.class);
         final AutoTestClassLoader loader = mockery.mock(AutoTestClassLoader.class);
-        final ClassFiles classes = mockery.mock(ClassFiles.class);
+        final ClassFile clazz = mockery.mock(ClassFile.class);
+        final String className = ClassFileTest.class.getName();
 
         mockery.checking(new Expectations()
         {{
-            one(classes).toClassArray(loader); will(returnValue(new Class[] {ClassFileTest.class}));
-            one(asserter).isTest(ClassFileTest.class); will(returnValue(true));
+            one(clazz).getClassName();will(returnValue(className));
+            one(loader).loadClass(className, clazz);will(returnValue(ClassFileTest.class));
         }});
 
-        TestMapper mapper = new SimpleTestMapper(asserter, loader);
-        Class[] tests = mapper.findTestsFor(classes);
+        SimpleTestMapper mapper = new SimpleTestMapper(loader);
+        Class[] tests = mapper.findTestsFor(clazz);
 
         assertSame(ClassFileTest.class, tests[0]);
-    }
-
-    public void multipleClassesShouldGetMappedCorrectly() throws Exception
-    {
-        final TestAsserter asserter = mockery.mock(TestAsserter.class);
-        final AutoTestClassLoader loader = mockery.mock(AutoTestClassLoader.class);
-        final ClassFiles classes = mockery.mock(ClassFiles.class);
-
-        mockery.checking(new Expectations()
-        {{
-            one(classes).toClassArray(loader); will(returnValue(new Class[] {ClassFileTest.class, TestNGTester.class}));
-            one(asserter).isTest(ClassFileTest.class); will(returnValue(true));
-            one(asserter).isTest(TestNGTester.class); will(returnValue(false));
-
-            one(loader).loadClass(TestNGTester.class.getName() + "Test"); will(returnValue(TestNGTesterTest.class));
-        }});
-
-        TestMapper mapper = new SimpleTestMapper(asserter, loader);
-        Class[] tests = mapper.findTestsFor(classes);
-
-        assertSame(ClassFileTest.class, tests[0]);
-        assertSame(TestNGTesterTest.class, tests[1]);
     }
 
     public void unknownTestClassesShouldBeIgnored() throws Exception
     {
-        final TestAsserter asserter = mockery.mock(TestAsserter.class);
         final AutoTestClassLoader loader = mockery.mock(AutoTestClassLoader.class);
-        final ClassFiles classes = mockery.mock(ClassFiles.class);
-        final String testName = Tester.class.getName() + "Test";
+        final ClassFile clazz = mockery.mock(ClassFile.class);
+        final String className = Tester.class.getName();
+        final String testName = className + "Test";
 
         mockery.checking(new Expectations()
         {{
-            one(classes).toClassArray(loader); will(returnValue(new Class[] {ClassFileTest.class, Tester.class}));
-            one(asserter).isTest(ClassFileTest.class); will(returnValue(true));
-            one(asserter).isTest(Tester.class); will(returnValue(false));
+            one(clazz).getClassName();will(returnValue(className));
+            one(loader).loadClass(className, clazz);will(returnValue(Tester.class));
 
             one(loader).loadClass(testName); will(throwException(new ClassNotFoundException(testName)));
         }});
 
-        TestMapper mapper = new SimpleTestMapper(asserter, loader);
-        Class[] tests = mapper.findTestsFor(classes);
+        SimpleTestMapper mapper = new SimpleTestMapper(loader);
+        Class[] tests = mapper.findTestsFor(clazz);
 
-        assertSame(ClassFileTest.class, tests[0]);
-        assertEquals(1, tests.length);
+        assertEquals(0, tests.length);
     }
 }
