@@ -1,11 +1,11 @@
 package org.jatproject.autotest;
 
-import org.jatproject.autotest.testng.TestNGTestAsserter;
-import org.jatproject.autotest.testng.TestNGTester;
-
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
+import org.jatproject.autotest.listeners.ConsoleTestListener;
+import org.jatproject.autotest.testng.TestNGTestAsserter;
+import org.jatproject.autotest.testng.TestNGTester;
 
 public class AutoTestRunner extends TimerTask
 {
@@ -26,7 +26,10 @@ public class AutoTestRunner extends TimerTask
 
         AutoTestClassLoader loader = new AutoTestClassLoader(classpath);
         TestMapper mapper = new SimpleTestMapper(new TestNGTestAsserter(), loader);
-        new TestNGTester(mapper).runTests(classpathChanges);
+
+        TestNGTester tester = new TestNGTester(mapper);
+        tester.addTestListener(new ConsoleTestListener());
+        tester.runTests(classpathChanges);
     }
 
     public static void main(String[] args)

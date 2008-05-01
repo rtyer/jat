@@ -3,6 +3,7 @@ package org.jatproject.autotest.testng;
 import org.jatproject.autotest.ClassFiles;
 import org.jatproject.autotest.TestMapper;
 import org.jatproject.autotest.Tester;
+import org.jatproject.autotest.TestListener;
 import org.testng.TestNG;
 
 public class TestNGTester implements Tester
@@ -22,6 +23,11 @@ public class TestNGTester implements Tester
 
         testng.setVerbose(0);
         testng.setUseDefaultListeners(false);
+    }
+
+    public void addTestListener(TestListener listener)
+    {
+        testng.addListener(new TestNGTestListener(listener));
     }
 
     public void runTests(ClassFiles classes)

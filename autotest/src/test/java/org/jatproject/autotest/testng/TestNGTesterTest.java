@@ -1,10 +1,12 @@
 package org.jatproject.autotest.testng;
 
 import org.jatproject.autotest.ClassFiles;
+import org.jatproject.autotest.TestListener;
 import org.jatproject.autotest.TestMapper;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
+import org.testng.ITestListener;
 import org.testng.TestNG;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -82,5 +84,21 @@ public class TestNGTesterTest
         }});
 
         new TestNGTester(testng, mapper).runTests(changeClasses);
+    }
+
+    public void shouldAddTestNGListenerWhenTestListenerAdded()
+    {
+        final TestNG testng = mockery.mock(TestNG.class);
+        final TestListener listener = mockery.mock(TestListener.class);
+
+        mockery.checking(new Expectations()
+        {{
+            one(testng).setVerbose(0);
+            one(testng).setUseDefaultListeners(false);
+            one(testng).addListener((ITestListener)with(a(TestNGTestListener.class)));
+        }});
+
+        new TestNGTester(testng, null).addTestListener(listener);
+
     }
 }
