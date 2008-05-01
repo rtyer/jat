@@ -1,8 +1,5 @@
 package org.jatproject.autotest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class SimpleTestMapper implements TestMapper
 {
     private TestAsserter asserter;
@@ -12,18 +9,6 @@ public class SimpleTestMapper implements TestMapper
     {
         this.asserter = asserter;
         this.loader = loader;
-    }
-
-    public Class[] findTestsFor(ClassFiles changedClasses)
-    {
-        ArrayList<Class> testClasses = new ArrayList<Class>();
-
-        for(ClassFile clazz : changedClasses)
-        {
-            testClasses.addAll(Arrays.asList(findTestsFor(clazz)));
-        }
-
-        return testClasses.toArray(new Class[testClasses.size()]);
     }
 
     public Class[] findTestsFor(ClassFile changedClass)
