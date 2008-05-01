@@ -1,10 +1,12 @@
 package org.jatproject.autotest;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class AutoTestClassLoader extends ClassLoader
 {
     private ClassPath classpath;
+    private HashMap<String, Class> classCache = new HashMap<String, Class>();
 
     public AutoTestClassLoader(ClassPath classpath)
     {
@@ -26,11 +28,15 @@ public class AutoTestClassLoader extends ClassLoader
     public Class loadClass(String className, ClassFile file) throws ClassNotFoundException
     {
         if(file == null) return findSystemClass(className);
+        if(classCache.containsKey(className)) return classCache.get(className);
         
         try
         {
             byte[] contents = file.getContents();
-            return defineClass(className, contents, 0, contents.length);
+            Class clazz = defineClass(className, contents, 0, contents.length);
+            classCache.put(className, clazz);
+            
+            return clazz;
         }
         catch (IOException e)
         {

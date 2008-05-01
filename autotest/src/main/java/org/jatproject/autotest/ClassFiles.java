@@ -23,6 +23,11 @@ public class ClassFiles implements Iterable<ClassFile>
         }
     }
 
+    public void addAll(ClassFiles classFiles)
+    {
+        this.files.addAll(classFiles.files);
+    }
+
     public Class[] toClassArray(AutoTestClassLoader loader)
     {
         List<Class> classes = new ArrayList<Class>();

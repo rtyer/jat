@@ -1,8 +1,6 @@
 package org.jatproject.autotest;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.jatproject.autotest.listeners.ConsoleTestListener;
@@ -28,24 +26,23 @@ public class AutoTestRunner extends TimerTask
         lastRunTime = System.currentTimeMillis();
 
         TestMapper mapper = new SimpleTestMapper(classpath);
-        ArrayList<Class> testClasses = new ArrayList<Class>();
+        ClassFiles testClasses = new ClassFiles();
         for(ClassFile clazz : classpathChanges)
         {
-            Class[] tests = mapper.findTestsFor(clazz).toClassArray(loader);
-            testClasses.addAll(Arrays.asList(tests));
+            testClasses.addAll(mapper.findTestsFor(clazz));
         }
 
 
         TestNGTester tester = new TestNGTester();
         tester.addTestListener(new ConsoleTestListener());
         tester.addTestListener(new GrowlTestListener());
-        tester.runTests(testClasses.toArray(new Class[testClasses.size()]));
+        tester.runTests(testClasses.toClassArray(loader));
     }
 
     public static void main(String[] args)
     {
-        File classDir = new File("/Users/cthiel/Projects/jat/autotest/target/classes/");
-        File testDir = new File("/Users/cthiel/Projects/jat/autotest/target/test/classes/");
+        File classDir = new File("/Users/aesterline/Projects/jat/autotest/target/classes/");
+        File testDir = new File("/Users/aesterline/Projects/jat/autotest/target/test/classes/");
         new Timer().schedule(new AutoTestRunner(new File[]{classDir, testDir}), 0, 10000);
     }
 }
