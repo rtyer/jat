@@ -1,10 +1,11 @@
 package org.jatproject.autotest;
 
+import org.jatproject.autotest.testng.TestNGTestAsserter;
+import org.jatproject.autotest.testng.TestNGTester;
+
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
-import org.jatproject.autotest.testng.TestNGTestAsserter;
-import org.jatproject.autotest.testng.TestNGTester;
 
 public class AutoTestRunner extends TimerTask
 {
