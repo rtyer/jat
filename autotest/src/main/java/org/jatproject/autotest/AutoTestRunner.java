@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.jatproject.autotest.listeners.ConsoleTestListener;
+import org.jatproject.autotest.listeners.GrowlTestListener;
 import org.jatproject.autotest.testng.TestNGTester;
 
 public class AutoTestRunner extends TimerTask
@@ -37,13 +38,14 @@ public class AutoTestRunner extends TimerTask
 
         TestNGTester tester = new TestNGTester();
         tester.addTestListener(new ConsoleTestListener());
+        tester.addTestListener(new GrowlTestListener());
         tester.runTests(testClasses.toArray(new Class[testClasses.size()]));
     }
 
     public static void main(String[] args)
     {
-        File classDir = new File("/Users/aesterline/Projects/jat/autotest/target/classes/");
-        File testDir = new File("/Users/aesterline/Projects/jat/autotest/target/test/classes/");
+        File classDir = new File("/Users/cthiel/Projects/jat/autotest/target/classes/");
+        File testDir = new File("/Users/cthiel/Projects/jat/autotest/target/test/classes/");
         new Timer().schedule(new AutoTestRunner(new File[]{classDir, testDir}), 0, 10000);
     }
 }
