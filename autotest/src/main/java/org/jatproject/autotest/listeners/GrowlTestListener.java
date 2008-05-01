@@ -23,7 +23,16 @@ public class GrowlTestListener implements TestListener
 		Runtime runTime = Runtime.getRuntime();
 		try 
 		{
-			runTime.exec("/usr/local/bin/growlnotify -s \"Tests Passed\" -m \"All Tests Run\"");
+			if (totalFailed == 0)
+			{
+				
+				runTime.exec(new String[]{"/usr/local/bin/growlnotify", "-s", "-t", "Tests Finished", "-m", "Tests Passing: " + totalPassed + ". No Failures", "--image", "/Users/cthiel/projects/jat/autotest/images/pass.png"});	
+			}
+			else
+			{
+				runTime.exec(new String[]{"/usr/local/bin/growlnotify", "-s", "-t", "Tests Finished", "-m", "Tests Passing: " + totalPassed + ". Total Failures: " + totalFailed + ".", "--image", "/Users/cthiel/projects/jat/autotest/images/fail.png"});
+			}
+			
 		} catch (IOException e) 
 		{
 			e.printStackTrace();
