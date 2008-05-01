@@ -33,7 +33,6 @@ public class SimpleTestMapperTest
 
     public void nonTestClassShouldAppendTestToClassName() throws Exception
     {
-        final TestAsserter asserter = mockery.mock(TestAsserter.class);
         final AutoTestClassLoader loader = mockery.mock(AutoTestClassLoader.class);
         final ClassFile clazz = mockery.mock(ClassFile.class);
         final String className = ClassFile.class.getName();
@@ -42,11 +41,10 @@ public class SimpleTestMapperTest
         {{
             one(clazz).getClassName();will(returnValue(className));
             one(loader).loadClass(className, clazz);will(returnValue(ClassFile.class));
-            one(asserter).isTest(ClassFile.class); will(returnValue(false));
             one(loader).loadClass(className + "Test"); will(returnValue(ClassFileTest.class));
         }});
 
-        SimpleTestMapper mapper = new SimpleTestMapper(asserter, loader);
+        SimpleTestMapper mapper = new SimpleTestMapper(loader);
         Class[] tests = mapper.findTestsFor(clazz);
 
         assertSame(ClassFileTest.class, tests[0]);
@@ -54,7 +52,6 @@ public class SimpleTestMapperTest
 
     public void testClassShouldJustReturnTheClass() throws Exception
     {
-        final TestAsserter asserter = mockery.mock(TestAsserter.class);
         final AutoTestClassLoader loader = mockery.mock(AutoTestClassLoader.class);
         final ClassFile clazz = mockery.mock(ClassFile.class);
         final String className = ClassFileTest.class.getName();
@@ -63,10 +60,9 @@ public class SimpleTestMapperTest
         {{
             one(clazz).getClassName();will(returnValue(className));
             one(loader).loadClass(className, clazz);will(returnValue(ClassFileTest.class));
-            one(asserter).isTest(ClassFileTest.class); will(returnValue(true));
         }});
 
-        SimpleTestMapper mapper = new SimpleTestMapper(asserter, loader);
+        SimpleTestMapper mapper = new SimpleTestMapper(loader);
         Class[] tests = mapper.findTestsFor(clazz);
 
         assertSame(ClassFileTest.class, tests[0]);
@@ -74,7 +70,6 @@ public class SimpleTestMapperTest
 
     public void unknownTestClassesShouldBeIgnored() throws Exception
     {
-        final TestAsserter asserter = mockery.mock(TestAsserter.class);
         final AutoTestClassLoader loader = mockery.mock(AutoTestClassLoader.class);
         final ClassFile clazz = mockery.mock(ClassFile.class);
         final String className = Tester.class.getName();
@@ -85,12 +80,10 @@ public class SimpleTestMapperTest
             one(clazz).getClassName();will(returnValue(className));
             one(loader).loadClass(className, clazz);will(returnValue(Tester.class));
 
-            one(asserter).isTest(Tester.class); will(returnValue(false));
-
             one(loader).loadClass(testName); will(throwException(new ClassNotFoundException(testName)));
         }});
 
-        SimpleTestMapper mapper = new SimpleTestMapper(asserter, loader);
+        SimpleTestMapper mapper = new SimpleTestMapper(loader);
         Class[] tests = mapper.findTestsFor(clazz);
 
         assertEquals(0, tests.length);

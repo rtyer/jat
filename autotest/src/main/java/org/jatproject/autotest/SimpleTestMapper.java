@@ -2,12 +2,10 @@ package org.jatproject.autotest;
 
 public class SimpleTestMapper implements TestMapper
 {
-    private TestAsserter asserter;
     private AutoTestClassLoader loader;
 
-    public SimpleTestMapper(TestAsserter asserter, AutoTestClassLoader loader)
+    public SimpleTestMapper(AutoTestClassLoader loader)
     {
-        this.asserter = asserter;
         this.loader = loader;
     }
 
@@ -18,7 +16,7 @@ public class SimpleTestMapper implements TestMapper
             String className = changedClass.getClassName();
             Class clazz = loader.loadClass(className, changedClass);
 
-            if(asserter.isTest(clazz))
+            if(className.endsWith("Test"))
             {
                 return new Class[]{clazz};
             }
