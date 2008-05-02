@@ -4,9 +4,9 @@ import java.util.List;
 
 public class NullClassFile extends ClassFile
 {
-    private String classname;
+    private Classname classname;
 
-    public NullClassFile(String classname)
+    public NullClassFile(Classname classname)
     {
         super(null, null);
         this.classname = classname;
@@ -14,7 +14,7 @@ public class NullClassFile extends ClassFile
 
     public String getClassName()
     {
-        return classname;
+        return classname.getFullyQulifiedClassName();
     }
 
     public void appendClass(List<Class> classes, AutoTestClassLoader loader)

@@ -19,16 +19,24 @@ public class ClassPath
 
     public boolean isOnPath(String classname)
     {
+        return isOnPath(new Classname(classname));
+    }
+
+    public boolean isOnPath(Classname classname)
+    {
         return findBaseDirectoryForClass(classname) != null;
     }
 
     public ClassFile find(String classname)
     {
-        String filename = classname.replace('.', '/') + ".class";
+        return find(new Classname(classname));
+    }
 
+    public ClassFile find(Classname classname)
+    {
         File baseDirectory = findBaseDirectoryForClass(classname);
         if(baseDirectory == null) return new NullClassFile(classname);
-        return new ClassFile(baseDirectory, new File(baseDirectory, filename));
+        return new ClassFile(baseDirectory, new File(baseDirectory, classname.getClassFileName()));        
     }
 
     public ClassFiles findChangesSince(long time)
@@ -46,13 +54,11 @@ public class ClassPath
         return files;
     }
 
-    private File findBaseDirectoryForClass(String classname)
+    private File findBaseDirectoryForClass(Classname classname)
     {
-        String filename = classname.replace('.', '/') + ".class";
-
         for(File directory : pathDirectories)
         {
-            File file = new File(directory, filename);
+            File file = new File(directory, classname.getClassFileName());
             if(file.exists()) return directory;
         }
 
