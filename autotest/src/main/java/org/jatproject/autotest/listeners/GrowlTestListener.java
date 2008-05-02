@@ -27,12 +27,12 @@ public class GrowlTestListener implements TestListener
 			{
 				
 				//runTime.exec(new String[]{"/usr/local/bin/growlnotify", "-s", "-t", "Tests Finished", "-m", "Tests Passing: " + totalPassed + ". No Failures", "--image", "/Users/cthiel/projects/jat/autotest/images/pass.png"});
-				runTime.exec(new String[]{"/usr/local/bin/growlnotify", "-s", "-t", "Tests Finished", "-m", "Tests Passing: " + totalPassed + ". No Failures"});
+				runTime.exec(new String[]{"/usr/local/bin/growlnotify", "-t", "Tests Finished", "-m", "Tests Passing: " + totalPassed + ". No Failures."});
 			}
 			else
 			{
 				//runTime.exec(new String[]{"/usr/local/bin/growlnotify", "-s", "-t", "Tests Finished", "-m", "Tests Passing: " + totalPassed + ". Total Failures: " + totalFailed + ".", "--image", "/Users/cthiel/projects/jat/autotest/images/fail.png"});
-				runTime.exec(new String[]{"/usr/local/bin/growlnotify", "-s", "-t", "Tests Finished", "-m", "Tests Passing: " + totalPassed + ". Total Failures: " + totalFailed + "."});
+				runTime.exec(new String[]{"/usr/local/bin/growlnotify", "-t", "Tests Finished", "-m", "Tests Passing: " + totalPassed + " Total Failures: " + totalFailed});
 			}
 			
 		} catch (IOException e) 
