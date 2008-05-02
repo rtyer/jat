@@ -17,17 +17,18 @@ public class ClassPath
         this.pathDirectories = pathDirectories;
     }
 
+    public boolean isOnPath(String classname)
+    {
+        return findBaseDirectoryForClass(classname) != null;
+    }
+
     public ClassFile find(String classname)
     {
         String filename = classname.replace('.', '/') + ".class";
 
-        for(File directory : pathDirectories)
-        {
-            File file = new File(directory, filename);
-            if(file.exists()) return new ClassFile(directory, file);
-        }
-        
-        return null;
+        File baseDirectory = findBaseDirectoryForClass(classname);
+        if(baseDirectory == null) return new NullClassFile(classname);
+        return new ClassFile(baseDirectory, new File(baseDirectory, filename));
     }
 
     public ClassFiles findChangesSince(long time)
@@ -43,5 +44,18 @@ public class ClassPath
         }
 
         return files;
+    }
+
+    private File findBaseDirectoryForClass(String classname)
+    {
+        String filename = classname.replace('.', '/') + ".class";
+
+        for(File directory : pathDirectories)
+        {
+            File file = new File(directory, filename);
+            if(file.exists()) return directory;
+        }
+
+        return null;
     }
 }

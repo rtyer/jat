@@ -2,13 +2,13 @@ package org.jatproject.autotest;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 public class ClassFile
 {
     private File baseDirectory;
     private File classFile;
-
 
     public ClassFile(File baseDirectory, File classFile)
     {
@@ -29,8 +29,20 @@ public class ClassFile
         return classFilePath;
     }
 
-    public byte[] getContents() throws IOException
+    public void appendClass(List<Class> classes, AutoTestClassLoader loader)
     {
-        return FileUtils.readFileToByteArray(classFile);
+        classes.add(loader.defineClass(getClassName(), getContents()));
+    }
+
+    public byte[] getContents()
+    {
+        try
+        {
+            return FileUtils.readFileToByteArray(classFile);
+        }
+        catch(IOException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }

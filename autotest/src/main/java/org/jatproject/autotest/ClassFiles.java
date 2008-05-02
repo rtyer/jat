@@ -34,16 +34,10 @@ public class ClassFiles implements Iterable<ClassFile>
 
         for(ClassFile file : files)
         {
-            try
-            {
-                classes.add(loader.loadClass(file.getClassName(), file));
-            }
-            catch(ClassNotFoundException e)
-            {
-            }
+            file.appendClass(classes, loader);
         }
 
-        return classes.toArray(new Class[files.size()]);
+        return classes.toArray(new Class[classes.size()]);
     }
 
     public Iterator<ClassFile> iterator()

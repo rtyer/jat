@@ -33,7 +33,6 @@ public class AutoTestRunner extends TimerTask
             testClasses.addAll(mapper.findTestsFor(clazz));
         }
 
-
         TestNGTester tester = new TestNGTester();
         tester.addTestListener(new ConsoleTestListener());
         tester.addTestListener(new GrowlTestListener());
