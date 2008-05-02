@@ -1,4 +1,10 @@
-package org.jatproject.autotest;
+package org.jatproject.autotest.mappers;
+
+import org.jatproject.autotest.TestMapper;
+import org.jatproject.autotest.ClassPath;
+import org.jatproject.autotest.ClassFiles;
+import org.jatproject.autotest.ClassFile;
+import org.jatproject.autotest.Classname;
 
 public class SimpleTestMapper implements TestMapper
 {
