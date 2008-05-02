@@ -3,6 +3,7 @@ package org.jatproject.autotest;
 import org.jatproject.autotest.listeners.ConsoleTestListener;
 import org.jatproject.autotest.listeners.GrowlTestListener;
 import org.jatproject.autotest.testng.TestNGTester;
+import org.jatproject.autotest.mappers.SimpleTestMapper;
 
 import java.io.File;
 import java.util.Timer;
