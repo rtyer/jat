@@ -2,5 +2,5 @@ package org.jatproject.autotest;
 
 public interface TestAsserter
 {
-    boolean isTest(Class clazz);
+    boolean isTest(Class<?> clazz);
 }
