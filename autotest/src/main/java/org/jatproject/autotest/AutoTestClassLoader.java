@@ -22,9 +22,11 @@ public class AutoTestClassLoader extends ClassLoader
     @Override
     public Class loadClass(String classname) throws ClassNotFoundException
     {
-        if(classpath.isOnPath(classname))
+        Classname name = new Classname(classname);
+
+        if(classpath.isOnPath(name))
         {
-            return loadClass(classname, classpath.find(classname));
+            return loadClass(classname, classpath.find(name));
         }
         return getParent().loadClass(classname);
     }

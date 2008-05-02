@@ -19,7 +19,7 @@ public class SimpleTestMapper implements TestMapper
         }
         else
         {
-            return new ClassFiles(classpath.find(className + "Test"));
+            return new ClassFiles(classpath.find(new Classname(className + "Test")));
         }
     }
 }

@@ -40,7 +40,7 @@ public class SimpleTestMapperTest
         mockery.checking(new Expectations()
         {{
             one(clazz).getClassName();will(returnValue(className));
-            one(classpath).find(className + "Test"); will(returnValue(foundClazz));
+            one(classpath).find(new Classname(className + "Test")); will(returnValue(foundClazz));
         }});
 
         SimpleTestMapper mapper = new SimpleTestMapper(classpath);

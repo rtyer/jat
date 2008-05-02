@@ -17,19 +17,9 @@ public class ClassPath
         this.pathDirectories = pathDirectories;
     }
 
-    public boolean isOnPath(String classname)
-    {
-        return isOnPath(new Classname(classname));
-    }
-
     public boolean isOnPath(Classname classname)
     {
         return findBaseDirectoryForClass(classname) != null;
-    }
-
-    public ClassFile find(String classname)
-    {
-        return find(new Classname(classname));
     }
 
     public ClassFile find(Classname classname)
