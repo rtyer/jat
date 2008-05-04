@@ -1,4 +1,4 @@
-package org.jatproject.autotest.mappers;
+package org.jatproject.autotest.repositories;
 
 import java.util.Set;
 import static org.testng.AssertJUnit.assertEquals;

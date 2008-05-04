@@ -3,7 +3,7 @@ package org.jatproject.autotest;
 import org.jatproject.autotest.listeners.ConsoleTestListener;
 import org.jatproject.autotest.listeners.GrowlTestListener;
 import org.jatproject.autotest.testng.TestNGTester;
-import org.jatproject.autotest.mappers.SimpleDependencyRepository;
+import org.jatproject.autotest.repositories.SimpleDependencyRepository;
 
 import java.io.File;
 import java.util.Timer;

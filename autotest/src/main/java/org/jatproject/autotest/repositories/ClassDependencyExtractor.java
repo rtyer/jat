@@ -1,4 +1,4 @@
-package org.jatproject.autotest.mappers;
+package org.jatproject.autotest.repositories;
 
 import java.util.HashSet;
 import java.util.Set;

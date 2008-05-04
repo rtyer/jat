@@ -1,4 +1,4 @@
-package org.jatproject.autotest.mappers;
+package org.jatproject.autotest.repositories;
 
 import org.jatproject.autotest.ClassFile;
 import org.jatproject.autotest.ClassFileTest;
