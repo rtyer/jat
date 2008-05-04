@@ -14,7 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 @Test
-public class SimpleTestMapperTest
+public class SimpleDependencyRepositoryTest
 {
     private Mockery mockery;
 
@@ -48,7 +48,7 @@ public class SimpleTestMapperTest
             one(classpath).find(new Classname(className + "Test")); will(returnValue(foundClazz));
         }});
 
-        SimpleTestMapper mapper = new SimpleTestMapper(classpath);
+        SimpleDependencyRepository mapper = new SimpleDependencyRepository(classpath);
         ClassFiles tests = mapper.findDependenciesFor(clazz);
 
         assertSame(foundClazz, tests.get(0));
@@ -64,7 +64,7 @@ public class SimpleTestMapperTest
             one(clazz).getClassName();will(returnValue(className));
         }});
 
-        SimpleTestMapper mapper = new SimpleTestMapper(null);
+        SimpleDependencyRepository mapper = new SimpleDependencyRepository(null);
         ClassFiles tests = mapper.findDependenciesFor(clazz);
 
         assertSame(clazz, tests.get(0));

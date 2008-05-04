@@ -6,11 +6,11 @@ import org.jatproject.autotest.ClassFiles;
 import org.jatproject.autotest.ClassFile;
 import org.jatproject.autotest.Classname;
 
-public class SimpleTestMapper implements DependencyRepository
+public class SimpleDependencyRepository implements DependencyRepository
 {
     private ClassPath classpath;
 
-    public SimpleTestMapper(ClassPath classpath)
+    public SimpleDependencyRepository(ClassPath classpath)
     {
         this.classpath = classpath;
     }

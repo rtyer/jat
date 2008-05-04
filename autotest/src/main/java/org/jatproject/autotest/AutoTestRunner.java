@@ -3,7 +3,7 @@ package org.jatproject.autotest;
 import org.jatproject.autotest.listeners.ConsoleTestListener;
 import org.jatproject.autotest.listeners.GrowlTestListener;
 import org.jatproject.autotest.testng.TestNGTester;
-import org.jatproject.autotest.mappers.SimpleTestMapper;
+import org.jatproject.autotest.mappers.SimpleDependencyRepository;
 
 import java.io.File;
 import java.util.Timer;
@@ -27,7 +27,7 @@ public class AutoTestRunner extends TimerTask
         ClassFiles classpathChanges = classpath.findChangesSince(lastRunTime);
         lastRunTime = System.currentTimeMillis();
 
-        DependencyRepository mapper = new SimpleTestMapper(classpath);
+        DependencyRepository mapper = new SimpleDependencyRepository(classpath);
         ClassFiles testClasses = new ClassFiles();
         for(ClassFile clazz : classpathChanges)
         {
