@@ -1,6 +1,5 @@
 package org.jatproject.autotest.testng;
 
-import org.jatproject.autotest.ClassFileTest;
 import org.jatproject.autotest.TestAsserter;
 import org.jatproject.autotest.Tester;
 import static org.testng.AssertJUnit.assertFalse;

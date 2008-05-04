@@ -8,26 +8,18 @@ import java.util.List;
 
 public class ClassFile
 {
-    private File baseDirectory;
+    private Classname classname;
     private File classFile;
 
-    public ClassFile(File baseDirectory, File classFile)
+    public ClassFile(Classname classname, File classFile)
     {
-        this.baseDirectory = baseDirectory;
+        this.classname = classname;
         this.classFile = classFile;
     }
 
     public String getClassName()
     {
-        String classFilePath = classFile.getAbsolutePath();
-        String baseDirectoryPath = baseDirectory.getAbsolutePath();
-
-        classFilePath = classFilePath.replace(baseDirectoryPath, "");
-        classFilePath = classFilePath.replace(".class", "");
-        classFilePath = classFilePath.replaceAll("/|\\\\", ".");
-        classFilePath = classFilePath.replaceFirst("^\\.", "");
-
-        return classFilePath;
+        return classname.getFullyQulifiedClassName();
     }
 
     public void appendClass(List<Class> classes, AutoTestClassLoader loader)

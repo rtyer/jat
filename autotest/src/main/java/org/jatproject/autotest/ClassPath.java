@@ -27,7 +27,7 @@ public class ClassPath
         File baseDirectory = findBaseDirectoryForClass(classname);
         if(baseDirectory == null) return null;
 
-        return new ClassFile(baseDirectory, new File(baseDirectory, classname.getClassFileName()));        
+        return new ClassFile(classname, new File(baseDirectory, classname.getClassFileName()));        
     }
 
     public ClassFiles findChangesSince(long time)

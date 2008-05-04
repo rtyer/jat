@@ -1,7 +1,6 @@
 package org.jatproject.autotest.repositories;
 
 import org.jatproject.autotest.ClassFile;
-import org.jatproject.autotest.ClassFileTest;
 import org.jatproject.autotest.ClassFiles;
 import org.jatproject.autotest.ClassPath;
 import org.jatproject.autotest.Classname;

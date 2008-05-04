@@ -19,7 +19,7 @@ public class ClassFiles implements Iterable<ClassFile>
     {
         for(File classFile : classFiles)
         {
-            files.add(new ClassFile(baseDirectory, classFile));
+            files.add(new ClassFile(new Classname(baseDirectory, classFile), classFile));
         }
     }
 
