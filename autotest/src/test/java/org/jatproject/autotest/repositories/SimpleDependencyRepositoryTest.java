@@ -4,6 +4,7 @@ import org.jatproject.autotest.ClassFile;
 import org.jatproject.autotest.ClassFiles;
 import org.jatproject.autotest.ClassPath;
 import org.jatproject.autotest.Classname;
+import org.jatproject.autotest.ClassnameTest;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
@@ -57,7 +58,7 @@ public class SimpleDependencyRepositoryTest
     public void testClassShouldJustReturnTheClass() throws Exception
     {
         final ClassFile clazz = mockery.mock(ClassFile.class);
-        final String className = ClassFileTest.class.getName();
+        final String className = ClassnameTest.class.getName();
 
         mockery.checking(new Expectations()
         {{

@@ -1,5 +1,6 @@
 package org.jatproject.autotest.testng;
 
+import org.jatproject.autotest.ClassnameTest;
 import org.jatproject.autotest.TestAsserter;
 import org.jatproject.autotest.Tester;
 import static org.testng.AssertJUnit.assertFalse;
@@ -26,7 +27,7 @@ public class TestNGTestAsserterTest
     @Test
     public void testAnnotationOnClassShouldReturnTrue()
     {
-        assertTrue(asserter.isTest(ClassFileTest.class));
+        assertTrue(asserter.isTest(ClassnameTest.class));
     }
 
     @Test
