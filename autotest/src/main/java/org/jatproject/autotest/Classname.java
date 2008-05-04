@@ -1,5 +1,7 @@
 package org.jatproject.autotest;
 
+import java.io.File;
+
 public class Classname
 {
     private String fullyQulifiedClassName;
@@ -7,6 +9,19 @@ public class Classname
     public Classname(String fullyQulifiedClassName)
     {
         this.fullyQulifiedClassName = fullyQulifiedClassName;
+    }
+
+    public Classname(File baseDirectory, File classFile)
+    {
+        String classFilePath = classFile.getAbsolutePath();
+        String baseDirectoryPath = baseDirectory.getAbsolutePath();
+
+        String fullyQualifiedClassName = classFilePath.replace(baseDirectoryPath, "");
+        fullyQualifiedClassName = fullyQualifiedClassName.replace(".class", "");
+        fullyQualifiedClassName = fullyQualifiedClassName.replaceAll("/|\\\\", ".");
+        fullyQualifiedClassName = fullyQualifiedClassName.replaceFirst("^\\.", "");
+
+        this.fullyQulifiedClassName = fullyQualifiedClassName;
     }
 
     public String getFullyQulifiedClassName()
