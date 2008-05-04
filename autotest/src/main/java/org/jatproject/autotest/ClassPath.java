@@ -25,7 +25,8 @@ public class ClassPath
     public ClassFile find(Classname classname)
     {
         File baseDirectory = findBaseDirectoryForClass(classname);
-        if(baseDirectory == null) return new NullClassFile(classname);
+        if(baseDirectory == null) return null;
+
         return new ClassFile(baseDirectory, new File(baseDirectory, classname.getClassFileName()));        
     }
 
