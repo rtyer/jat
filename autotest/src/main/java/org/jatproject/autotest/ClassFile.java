@@ -10,11 +10,13 @@ public class ClassFile
 {
     private Classname classname;
     private File classFile;
+    private AutoTestClassLoader loader;
 
-    public ClassFile(Classname classname, File classFile)
+    public ClassFile(Classname classname, File classFile, AutoTestClassLoader loader)
     {
         this.classname = classname;
         this.classFile = classFile;
+        this.loader = loader;
     }
 
     public String getClassName()
@@ -22,9 +24,14 @@ public class ClassFile
         return classname.getFullyQulifiedClassName();
     }
 
-    public void appendClass(List<Class> classes, AutoTestClassLoader loader)
+    public Class getClazz()
     {
-        classes.add(loader.defineClass(getClassName(), getContents()));
+        return loader.defineClass(getClassName(), getContents());    
+    }
+
+    public void appendClass(List<Class> classes)
+    {
+        classes.add(getClazz());
     }
 
     public byte[] getContents()

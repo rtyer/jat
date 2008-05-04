@@ -35,10 +35,8 @@ public class AutoTestClassLoader extends ClassLoader
     {
         if(classCache.containsKey(className)) return classCache.get(className);
 
-        byte[] contents = file.getContents();
-        Class clazz = defineClass(className, contents, 0, contents.length);
+        Class clazz = file.getClazz();
         classCache.put(className, clazz);
-
         return clazz;
     }
 

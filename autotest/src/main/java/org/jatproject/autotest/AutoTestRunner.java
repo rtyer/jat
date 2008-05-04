@@ -23,7 +23,6 @@ public class AutoTestRunner extends TimerTask
     public void run()
     {
         ClassPath classpath = new ClassPath(classDirs);
-        AutoTestClassLoader loader = new AutoTestClassLoader(classpath);
         ClassFiles classpathChanges = classpath.findChangesSince(lastRunTime);
         lastRunTime = System.currentTimeMillis();
 
@@ -37,7 +36,7 @@ public class AutoTestRunner extends TimerTask
         TestNGTester tester = new TestNGTester();
         tester.addTestListener(new ConsoleTestListener());
         tester.addTestListener(new GrowlTestListener());
-        tester.runTests(testClasses.toClassArray(loader));
+        tester.runTests(testClasses.toClassArray());
     }
 
     public static void main(String[] args)

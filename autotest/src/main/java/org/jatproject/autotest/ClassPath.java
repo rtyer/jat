@@ -11,10 +11,12 @@ import java.util.Collection;
 public class ClassPath
 {
     private File[] pathDirectories;
+    private AutoTestClassLoader loader;
 
     public ClassPath(File[] pathDirectories)
     {
         this.pathDirectories = pathDirectories;
+        loader = new AutoTestClassLoader(this);
     }
 
     public boolean isOnPath(Classname classname)
@@ -27,7 +29,7 @@ public class ClassPath
         File baseDirectory = findBaseDirectoryForClass(classname);
         if(baseDirectory == null) return null;
 
-        return new ClassFile(classname, new File(baseDirectory, classname.getClassFileName()));        
+        return new ClassFile(classname, new File(baseDirectory, classname.getClassFileName()), loader);
     }
 
     public ClassFiles findChangesSince(long time)
@@ -41,7 +43,7 @@ public class ClassPath
 
             for(File changedFile : FileUtils.convertFileCollectionToFileArray(changes))
             {
-                files.add(new ClassFile(new Classname(directory, changedFile), changedFile));
+                files.add(new ClassFile(new Classname(directory, changedFile), changedFile, loader));
             }
         }
 

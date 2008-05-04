@@ -24,13 +24,13 @@ public class ClassFiles implements Iterable<ClassFile>
         this.files.addAll(classFiles.files);
     }
 
-    public Class[] toClassArray(AutoTestClassLoader loader)
+    public Class[] toClassArray()
     {
         List<Class> classes = new ArrayList<Class>();
 
         for(ClassFile file : files)
         {
-            file.appendClass(classes, loader);
+            file.appendClass(classes);
         }
 
         return classes.toArray(new Class[classes.size()]);
