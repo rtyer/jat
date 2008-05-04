@@ -1,8 +1,9 @@
 package org.jatproject.autotest;
 
-import java.io.File;
-import org.testng.annotations.Test;
 import static org.testng.AssertJUnit.assertEquals;
+import org.testng.annotations.Test;
+
+import java.io.File;
 
 @Test
 public class ClassFileTest

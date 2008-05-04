@@ -1,5 +1,10 @@
 package org.jatproject.autotest.mappers;
 
+import org.jatproject.autotest.ClassFile;
+import org.jatproject.autotest.ClassFileTest;
+import org.jatproject.autotest.ClassFiles;
+import org.jatproject.autotest.ClassPath;
+import org.jatproject.autotest.Classname;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
@@ -7,12 +12,6 @@ import static org.testng.AssertJUnit.assertSame;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.jatproject.autotest.mappers.SimpleTestMapper;
-import org.jatproject.autotest.ClassPath;
-import org.jatproject.autotest.ClassFile;
-import org.jatproject.autotest.Classname;
-import org.jatproject.autotest.ClassFiles;
-import org.jatproject.autotest.ClassFileTest;
 
 @Test
 public class SimpleTestMapperTest
@@ -50,7 +49,7 @@ public class SimpleTestMapperTest
         }});
 
         SimpleTestMapper mapper = new SimpleTestMapper(classpath);
-        ClassFiles tests = mapper.findTestsFor(clazz);
+        ClassFiles tests = mapper.findDependenciesFor(clazz);
 
         assertSame(foundClazz, tests.get(0));
     }
@@ -66,7 +65,7 @@ public class SimpleTestMapperTest
         }});
 
         SimpleTestMapper mapper = new SimpleTestMapper(null);
-        ClassFiles tests = mapper.findTestsFor(clazz);
+        ClassFiles tests = mapper.findDependenciesFor(clazz);
 
         assertSame(clazz, tests.get(0));
     }

@@ -1,12 +1,12 @@
 package org.jatproject.autotest.mappers;
 
-import org.jatproject.autotest.TestMapper;
+import org.jatproject.autotest.DependencyRepository;
 import org.jatproject.autotest.ClassPath;
 import org.jatproject.autotest.ClassFiles;
 import org.jatproject.autotest.ClassFile;
 import org.jatproject.autotest.Classname;
 
-public class SimpleTestMapper implements TestMapper
+public class SimpleTestMapper implements DependencyRepository
 {
     private ClassPath classpath;
 
@@ -15,7 +15,7 @@ public class SimpleTestMapper implements TestMapper
         this.classpath = classpath;
     }
 
-    public ClassFiles findTestsFor(ClassFile changedClass)
+    public ClassFiles findDependenciesFor(ClassFile changedClass)
     {
         String className = changedClass.getClassName();
 
