@@ -1,6 +1,5 @@
 package org.jatproject.autotest;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -15,12 +14,9 @@ public class ClassFiles implements Iterable<ClassFile>
         this.files.addAll(Arrays.asList(files));
     }
 
-    public void addAll(File baseDirectory, File[] classFiles)
+    public void add(ClassFile file)
     {
-        for(File classFile : classFiles)
-        {
-            files.add(new ClassFile(new Classname(baseDirectory, classFile), classFile));
-        }
+        files.add(file);
     }
 
     public void addAll(ClassFiles classFiles)

@@ -32,14 +32,17 @@ public class ClassPath
 
     public ClassFiles findChangesSince(long time)
     {
-        IOFileFilter filter = FileFilterUtils.ageFileFilter(time, false);
-
         ClassFiles files = new ClassFiles();
+        IOFileFilter filter = FileFilterUtils.ageFileFilter(time, false);
 
         for(File directory : pathDirectories)
         {
             Collection changes = FileUtils.listFiles(directory, filter, TrueFileFilter.INSTANCE);
-            files.addAll(directory, FileUtils.convertFileCollectionToFileArray(changes));
+
+            for(File changedFile : FileUtils.convertFileCollectionToFileArray(changes))
+            {
+                files.add(new ClassFile(new Classname(directory, changedFile), changedFile));
+            }
         }
 
         return files;
