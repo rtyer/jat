@@ -1,7 +1,30 @@
 package org.jatproject.autotest;
 
-public interface Tester
+public class Tester
 {
-    void addTestListener(TestListener listener);
-    void runTests(Class... classes);
+    private TestEngine[] engines;
+
+    public Tester(TestEngine... engines)
+    {
+        this.engines = engines;
+    }
+    
+    public void runTests(ClassFiles classFiles)
+    {
+        for(ClassFile file : classFiles)
+        {
+            Class clazz = file.getClazz();
+            for(TestEngine engine : engines)
+            {
+                if(engine.add(clazz)) break;
+            }
+        }
+
+        for(TestEngine engine : engines) engine.run();
+    }
+
+    public void addListener(TestListener listener)
+    {
+        for(TestEngine engine : engines) engine.addListener(listener);
+    }
 }

@@ -1,7 +1,7 @@
 package org.jatproject.autotest.testng;
 
 import org.jatproject.autotest.ClassnameTest;
-import org.jatproject.autotest.Tester;
+import org.jatproject.autotest.TestEngine;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 import org.testng.annotations.BeforeMethod;
@@ -20,7 +20,7 @@ public class TestNGTestAsserterTest
     @Test
     public void nonTestNGClassesShouldReturnFalse()
     {
-        assertFalse(asserter.isTest(Tester.class));
+        assertFalse(asserter.isTest(TestEngine.class));
     }
 
     @Test
