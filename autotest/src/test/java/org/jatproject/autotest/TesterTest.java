@@ -7,6 +7,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+
 @Test
 public class TesterTest
 {
@@ -43,7 +47,7 @@ public class TesterTest
             one(rejecting).run();
         }});
 
-        new Tester(accepting, rejecting).runTests(new ClassFiles(clazz));
+        new Tester(accepting, rejecting).runTests(Collections.singleton(clazz));
     }
 
     public void shouldAskNextEngineIfFirstDoesNotAddClass()
@@ -61,7 +65,7 @@ public class TesterTest
             one(rejecting).run();
         }});
 
-        new Tester(rejecting, accepting).runTests(new ClassFiles(clazz));
+        new Tester(rejecting, accepting).runTests(Collections.singleton(clazz));
     }
 
     public void shouldContinueToTheNextClazzIfNoEngineAcceptsAClazz()
@@ -83,7 +87,7 @@ public class TesterTest
             one(rejecting).run();
         }});
 
-        new Tester(rejecting, accepting).runTests(new ClassFiles(nonTest, test));
+        new Tester(rejecting, accepting).runTests(new HashSet<ClassFile>(Arrays.asList(nonTest, test)));
     }
 
     public void shouldPassTestListenersToAllTestEngines()

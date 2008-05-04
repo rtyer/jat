@@ -1,5 +1,7 @@
 package org.jatproject.autotest;
 
+import java.util.Set;
+
 public class Tester
 {
     private TestEngine[] engines;
@@ -9,7 +11,7 @@ public class Tester
         this.engines = engines;
     }
     
-    public void runTests(ClassFiles classFiles)
+    public void runTests(Set<ClassFile> classFiles)
     {
         for(ClassFile file : classFiles)
         {

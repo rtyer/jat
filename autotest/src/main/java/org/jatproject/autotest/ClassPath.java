@@ -7,6 +7,8 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ClassPath
 {
@@ -32,9 +34,9 @@ public class ClassPath
         return new ClassFile(classname, new File(baseDirectory, classname.getClassFileName()), loader);
     }
 
-    public ClassFiles findChangesSince(long time)
+    public Set<ClassFile> findChangesSince(long time)
     {
-        ClassFiles files = new ClassFiles();
+        Set<ClassFile> files = new HashSet<ClassFile>();
         IOFileFilter filter = FileFilterUtils.ageFileFilter(time, false);
 
         for(File directory : pathDirectories)

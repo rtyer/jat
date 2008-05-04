@@ -1,18 +1,18 @@
 package org.jatproject.autotest.repositories;
 
 import org.jatproject.autotest.ClassFile;
-import org.jatproject.autotest.ClassFiles;
 import org.jatproject.autotest.ClassPath;
 import org.jatproject.autotest.Classname;
 import org.jatproject.autotest.ClassnameTest;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
-import static org.testng.AssertJUnit.assertSame;
 import static org.testng.AssertJUnit.assertTrue;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.Set;
 
 @Test
 public class SimpleDependencyRepositoryTest
@@ -50,9 +50,9 @@ public class SimpleDependencyRepositoryTest
         }});
 
         SimpleDependencyRepository repository = new SimpleDependencyRepository(classpath);
-        ClassFiles tests = repository.findDependenciesFor(clazz);
+        Set<ClassFile> tests = repository.findDependenciesFor(clazz);
 
-        assertSame(foundClazz, tests.get(0));
+        assertTrue(tests.contains(foundClazz));
     }
 
     public void testClassShouldJustReturnTheClass() throws Exception
@@ -66,9 +66,9 @@ public class SimpleDependencyRepositoryTest
         }});
 
         SimpleDependencyRepository repository = new SimpleDependencyRepository(null);
-        ClassFiles tests = repository.findDependenciesFor(clazz);
+        Set<ClassFile> tests = repository.findDependenciesFor(clazz);
 
-        assertSame(clazz, tests.get(0));
+        assertTrue(tests.contains(clazz));
     }
 
     public void nullReturnFromClassPathShouldReturnEmptyClassFiles()
@@ -84,7 +84,7 @@ public class SimpleDependencyRepositoryTest
         }});
 
         SimpleDependencyRepository repository = new SimpleDependencyRepository(classpath);
-        ClassFiles tests = repository.findDependenciesFor(clazz);
+        Set<ClassFile> tests = repository.findDependenciesFor(clazz);
 
         assertTrue(tests.isEmpty());
     }

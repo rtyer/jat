@@ -6,6 +6,8 @@ import org.jatproject.autotest.repositories.SimpleDependencyRepository;
 import org.jatproject.autotest.testng.TestNGTestEngine;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,11 +25,11 @@ public class AutoTestRunner extends TimerTask
     public void run()
     {
         ClassPath classpath = new ClassPath(classDirs);
-        ClassFiles classpathChanges = classpath.findChangesSince(lastRunTime);
+        Set<ClassFile> classpathChanges = classpath.findChangesSince(lastRunTime);
         lastRunTime = System.currentTimeMillis();
 
         DependencyRepository repository = new SimpleDependencyRepository(classpath);
-        ClassFiles dependencies = new ClassFiles();
+        Set<ClassFile> dependencies = new HashSet<ClassFile>();
         for(ClassFile clazz : classpathChanges)
         {
             dependencies.addAll(repository.findDependenciesFor(clazz));
