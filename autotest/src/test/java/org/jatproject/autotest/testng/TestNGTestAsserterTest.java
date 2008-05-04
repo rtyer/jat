@@ -1,7 +1,6 @@
 package org.jatproject.autotest.testng;
 
 import org.jatproject.autotest.ClassnameTest;
-import org.jatproject.autotest.TestAsserter;
 import org.jatproject.autotest.Tester;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
@@ -10,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class TestNGTestAsserterTest
 {
-    private TestAsserter asserter;
+    private TestNGTestAsserter asserter;
 
     @BeforeMethod
     protected void beforeEach() throws Exception

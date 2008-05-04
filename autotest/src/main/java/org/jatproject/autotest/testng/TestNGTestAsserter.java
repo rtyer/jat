@@ -1,11 +1,10 @@
 package org.jatproject.autotest.testng;
 
 import org.testng.annotations.Test;
-import org.jatproject.autotest.TestAsserter;
 
 import java.lang.reflect.Method;
 
-public class TestNGTestAsserter implements TestAsserter
+public class TestNGTestAsserter
 {
     public boolean isTest(Class<?> clazz)
     {
