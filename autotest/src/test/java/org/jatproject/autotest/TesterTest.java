@@ -33,7 +33,7 @@ public class TesterTest
         mockery.assertIsSatisfied();
     }
 
-    public void shouldNotAskNextIfFirstEngineAddsClass()
+    public void shouldNotAskNextIfFirstEngineRunsClass()
     {
         final ClassFile clazz = mockery.mock(ClassFile.class);
         final TestEngine accepting = mockery.mock(TestEngine.class, "accepting");
@@ -42,15 +42,13 @@ public class TesterTest
         mockery.checking(new Expectations()
         {{
             one(clazz).getClazz(); will(returnValue(ClassFile.class));
-            one(accepting).add(ClassFile.class); will(returnValue(true));
-            one(accepting).run();
-            one(rejecting).run();
+            one(accepting).run(ClassFile.class); will(returnValue(true));
         }});
 
         new Tester(accepting, rejecting).runTests(Collections.singleton(clazz));
     }
 
-    public void shouldAskNextEngineIfFirstDoesNotAddClass()
+    public void shouldAskNextEngineIfFirstDoesNotRunClass()
     {
         final ClassFile clazz = mockery.mock(ClassFile.class);
         final TestEngine accepting = mockery.mock(TestEngine.class, "accepting");
@@ -59,10 +57,8 @@ public class TesterTest
         mockery.checking(new Expectations()
         {{
             one(clazz).getClazz(); will(returnValue(ClassFile.class));
-            one(rejecting).add(ClassFile.class); will(returnValue(false));
-            one(accepting).add(ClassFile.class); will(returnValue(true));
-            one(accepting).run();
-            one(rejecting).run();
+            one(rejecting).run(ClassFile.class); will(returnValue(false));
+            one(accepting).run(ClassFile.class); will(returnValue(true));
         }});
 
         new Tester(rejecting, accepting).runTests(Collections.singleton(clazz));
@@ -78,13 +74,11 @@ public class TesterTest
         mockery.checking(new Expectations()
         {{
             one(nonTest).getClazz(); will(returnValue(ClassFile.class));
-            one(rejecting).add(ClassFile.class); will(returnValue(false));
-            one(accepting).add(ClassFile.class); will(returnValue(false));
+            one(rejecting).run(ClassFile.class); will(returnValue(false));
+            one(accepting).run(ClassFile.class); will(returnValue(false));
             one(test).getClazz(); will(returnValue(ClassnameTest.class));
-            one(rejecting).add(ClassnameTest.class); will(returnValue(false));
-            one(accepting).add(ClassnameTest.class); will(returnValue(true));
-            one(accepting).run();
-            one(rejecting).run();
+            one(rejecting).run(ClassnameTest.class); will(returnValue(false));
+            one(accepting).run(ClassnameTest.class); will(returnValue(true));
         }});
 
         new Tester(rejecting, accepting).runTests(new HashSet<ClassFile>(Arrays.asList(nonTest, test)));

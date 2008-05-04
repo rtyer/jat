@@ -4,14 +4,10 @@ import org.jatproject.autotest.TestEngine;
 import org.jatproject.autotest.TestListener;
 import org.testng.TestNG;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class TestNGTestEngine implements TestEngine
 {
     private final TestNG testng;
     private final TestNGTestAsserter asserter;
-    private final Set<Class> tests;
 
     public TestNGTestEngine()
     {
@@ -22,7 +18,6 @@ public class TestNGTestEngine implements TestEngine
     {
         this.testng = testng;
         this.asserter = asserter;
-        this.tests = new HashSet<Class>();
 
         testng.setVerbose(0);
         testng.setUseDefaultListeners(false);
@@ -33,23 +28,15 @@ public class TestNGTestEngine implements TestEngine
         testng.addListener(new TestNGTestListener(listener));
     }
 
-    public boolean add(Class<?> clazz)
+    public boolean run(Class<?> clazz)
     {
         if(asserter.isTest(clazz))
         {
-            tests.add(clazz);
+            testng.setTestClasses(new Class[] {clazz});
+            testng.run();
             return true;
         }
-
+        
         return false;
-    }
-
-    public void run()
-    {
-        if(tests.isEmpty() == false)
-        {
-            testng.setTestClasses(tests.toArray(new Class[tests.size()]));
-            testng.run();
-        }
     }
 }

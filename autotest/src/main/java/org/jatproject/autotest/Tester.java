@@ -18,11 +18,9 @@ public class Tester
             Class clazz = file.getClazz();
             for(TestEngine engine : engines)
             {
-                if(engine.add(clazz)) break;
+                if(engine.run(clazz)) break;
             }
         }
-
-        for(TestEngine engine : engines) engine.run();
     }
 
     public void addListener(TestListener listener)

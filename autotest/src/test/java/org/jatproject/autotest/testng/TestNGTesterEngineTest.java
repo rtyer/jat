@@ -47,7 +47,7 @@ public class TestNGTesterEngineTest
         new TestNGTestEngine(testng, null);
     }
 
-    public void shouldAddClassWhenAsserterReturnsTrue()
+    public void shouldRunClassWhenAsserterReturnsTrue()
     {
         final TestNGTestAsserter asserter = mockery.mock(TestNGTestAsserter.class);
         final TestNG testng = mockery.mock(TestNG.class);
@@ -57,12 +57,15 @@ public class TestNGTesterEngineTest
             one(testng).setVerbose(0);
             one(testng).setUseDefaultListeners(false);
             one(asserter).isTest(TestNG.class); will(returnValue(true));
+            one(testng).setTestClasses(new Class[] {TestNG.class});
+            one(testng).run();
+
         }});
 
-        assertTrue(new TestNGTestEngine(testng, asserter).add(TestNG.class));
+        assertTrue(new TestNGTestEngine(testng, asserter).run(TestNG.class));
     }
 
-    public void shouldNotAddClassWhenAsserterReturnsFalse()
+    public void shouldNotRunClassWhenAsserterReturnsFalse()
     {
         final TestNGTestAsserter asserter = mockery.mock(TestNGTestAsserter.class);
         final TestNG testng = mockery.mock(TestNG.class);
@@ -74,68 +77,7 @@ public class TestNGTesterEngineTest
             one(asserter).isTest(TestNG.class); will(returnValue(false));
         }});
 
-        assertFalse(new TestNGTestEngine(testng, asserter).add(TestNG.class));
-    }
-
-    public void shouldRunTestsThatAreSuccessfullyAddedToTheEngine()
-    {
-        final TestNG testng = mockery.mock(TestNG.class);
-        final TestNGTestAsserter asserter = mockery.mock(TestNGTestAsserter.class);
-
-        final Class testClass = Mockery.class;
-
-        mockery.checking(new Expectations()
-        {{
-            one(testng).setVerbose(0);
-            one(testng).setUseDefaultListeners(false);
-            one(asserter).isTest(testClass); will(returnValue(true));
-
-            one(testng).setTestClasses(new Class[] {testClass});
-            one(testng).run();
-        }});
-
-        TestNGTestEngine testEngine = new TestNGTestEngine(testng, asserter);
-        testEngine.add(testClass);
-        testEngine.run();
-    }
-
-    public void shouldNotRunTestsThatAreNotSuccessfullyAddedToTheEngine()
-    {
-        final TestNG testng = mockery.mock(TestNG.class);
-        final TestNGTestAsserter asserter = mockery.mock(TestNGTestAsserter.class);
-
-        final Class testClass = Mockery.class;
-        final Class nonTest = TestNG.class;
-
-        mockery.checking(new Expectations()
-        {{
-            one(testng).setVerbose(0);
-            one(testng).setUseDefaultListeners(false);
-            one(asserter).isTest(testClass); will(returnValue(true));
-            one(asserter).isTest(nonTest); will(returnValue(false));
-
-            one(testng).setTestClasses(new Class[] {testClass});
-            one(testng).run();
-        }});
-
-        TestNGTestEngine testEngine = new TestNGTestEngine(testng, asserter);
-        testEngine.add(testClass);
-        testEngine.add(nonTest);
-        testEngine.run();
-    }
-
-    public void shouldNotRunWhenTestClassesIsEmpty()
-    {
-        final TestNG testng = mockery.mock(TestNG.class);
-
-        mockery.checking(new Expectations()
-        {{
-            one(testng).setVerbose(0);
-            one(testng).setUseDefaultListeners(false);
-            never(testng).run();
-        }});
-
-        new TestNGTestEngine(testng, null).run();
+        assertFalse(new TestNGTestEngine(testng, asserter).run(TestNG.class));
     }
 
     public void shouldAddTestNGListenerWhenTestListenerAdded()
