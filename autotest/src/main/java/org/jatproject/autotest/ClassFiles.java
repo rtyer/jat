@@ -49,4 +49,9 @@ public class ClassFiles implements Iterable<ClassFile>
     {
         return files.get(index);
     }
+
+    public boolean isEmpty()
+    {
+        return files.isEmpty();
+    }
 }

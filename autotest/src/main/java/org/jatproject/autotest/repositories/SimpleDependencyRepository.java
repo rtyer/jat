@@ -19,13 +19,9 @@ public class SimpleDependencyRepository implements DependencyRepository
     {
         String className = changedClass.getClassName();
 
-        if(className.endsWith("Test"))
-        {
-            return new ClassFiles(changedClass);
-        }
-        else
-        {
-            return new ClassFiles(classpath.find(new Classname(className + "Test")));
-        }
+        if(className.endsWith("Test")) return new ClassFiles(changedClass);
+
+        ClassFile file = classpath.find(new Classname(className + "Test"));
+        return file == null ? new ClassFiles() : new ClassFiles(file);
     }
 }
