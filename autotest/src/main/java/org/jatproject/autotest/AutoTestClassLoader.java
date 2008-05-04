@@ -26,13 +26,16 @@ public class AutoTestClassLoader extends ClassLoader
 
         if(classpath.isOnPath(name))
         {
-            return loadClass(classname, classpath.find(name));
+            return loadClass(classpath.find(name));
         }
+
         return getParent().loadClass(classname);
     }
 
-    public Class loadClass(String className, ClassFile file) throws ClassNotFoundException
+    public Class loadClass(ClassFile file) throws ClassNotFoundException
     {
+        String className = file.getClassName();
+
         if(classCache.containsKey(className)) return classCache.get(className);
 
         Class clazz = file.getClazz();
