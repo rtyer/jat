@@ -14,18 +14,19 @@ import java.util.TimerTask;
 public class AutoTestRunner extends TimerTask
 {
     private long lastRunTime;
-    private ClassPath classpath;
-    private ReferenceRepository repository;
+    private File[] classDirs;
 
     public AutoTestRunner(File[] classDirs)
     {
+        this.classDirs = classDirs;
         lastRunTime = System.currentTimeMillis();
-        classpath = new ClassPath(classDirs);
-        repository = new SimpleReferenceRepository(classpath);
     }
 
     public void run()
     {
+        ClassPath classpath = new ClassPath(classDirs);
+        ReferenceRepository repository = new SimpleReferenceRepository(classpath);
+
         Set<ClassFile> classpathChanges = classpath.findChangesSince(lastRunTime);
         lastRunTime = System.currentTimeMillis();
 
