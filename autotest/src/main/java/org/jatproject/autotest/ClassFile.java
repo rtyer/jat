@@ -45,4 +45,21 @@ public class ClassFile
             throw new RuntimeException(e);
         }
     }
+    public int hashCode(){
+    	return getClassName().hashCode();
+    }
+    public boolean equals(Object o){
+        if(this == o)
+        {
+            return true;
+        }
+        if(o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+
+        ClassFile classfile = (ClassFile) o;
+        return this.getClassName() == classfile.getClassName();
+    }
+    
 }
