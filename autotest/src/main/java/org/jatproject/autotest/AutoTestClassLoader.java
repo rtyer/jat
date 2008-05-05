@@ -32,19 +32,16 @@ public class AutoTestClassLoader extends ClassLoader
         return getParent().loadClass(classname);
     }
 
-    public Class loadClass(ClassFile file) throws ClassNotFoundException
+    public Class loadClass(ClassFile file)
     {
-        String className = file.getClassName();
+        String classname = file.getClassName();
 
-        if(classCache.containsKey(className)) return classCache.get(className);
+        if(classCache.containsKey(classname)) return classCache.get(classname);
 
-        Class clazz = file.getClazz();
-        classCache.put(className, clazz);
+        byte[] contents = file.getContents();
+        Class clazz = defineClass(classname, contents, 0, contents.length);
+        classCache.put(classname, clazz);
+        
         return clazz;
-    }
-
-    public Class defineClass(String classname, byte[] contents)
-    {
-        return defineClass(classname, contents, 0, contents.length);
     }
 }

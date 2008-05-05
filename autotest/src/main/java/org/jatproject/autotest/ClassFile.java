@@ -26,7 +26,7 @@ public class ClassFile
 
     public Class getClazz()
     {
-        return loader.defineClass(getClassName(), getContents());    
+        return loader.loadClass(this);    
     }
 
     public void appendClass(List<Class> classes)
