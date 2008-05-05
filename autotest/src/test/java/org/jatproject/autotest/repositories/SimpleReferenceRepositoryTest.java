@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import java.util.Set;
 
 @Test
-public class SimpleDependencyRepositoryTest
+public class SimpleReferenceRepositoryTest
 {
     private Mockery mockery;
 
@@ -49,8 +49,8 @@ public class SimpleDependencyRepositoryTest
             one(classpath).find(new Classname(className + "Test")); will(returnValue(foundClazz));
         }});
 
-        SimpleDependencyRepository repository = new SimpleDependencyRepository(classpath);
-        Set<ClassFile> tests = repository.findDependenciesFor(clazz);
+        SimpleReferenceRepository repository = new SimpleReferenceRepository(classpath);
+        Set<ClassFile> tests = repository.findReferencesTo(clazz);
 
         assertTrue(tests.contains(foundClazz));
     }
@@ -65,8 +65,8 @@ public class SimpleDependencyRepositoryTest
             one(clazz).getClassName();will(returnValue(className));
         }});
 
-        SimpleDependencyRepository repository = new SimpleDependencyRepository(null);
-        Set<ClassFile> tests = repository.findDependenciesFor(clazz);
+        SimpleReferenceRepository repository = new SimpleReferenceRepository(null);
+        Set<ClassFile> tests = repository.findReferencesTo(clazz);
 
         assertTrue(tests.contains(clazz));
     }
@@ -83,8 +83,8 @@ public class SimpleDependencyRepositoryTest
             one(classpath).find(new Classname(className + "Test")); will(returnValue(null));
         }});
 
-        SimpleDependencyRepository repository = new SimpleDependencyRepository(classpath);
-        Set<ClassFile> tests = repository.findDependenciesFor(clazz);
+        SimpleReferenceRepository repository = new SimpleReferenceRepository(classpath);
+        Set<ClassFile> tests = repository.findReferencesTo(clazz);
 
         assertTrue(tests.isEmpty());
     }

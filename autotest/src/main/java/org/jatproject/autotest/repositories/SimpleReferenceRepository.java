@@ -3,22 +3,22 @@ package org.jatproject.autotest.repositories;
 import org.jatproject.autotest.ClassFile;
 import org.jatproject.autotest.ClassPath;
 import org.jatproject.autotest.Classname;
-import org.jatproject.autotest.DependencyRepository;
+import org.jatproject.autotest.ReferenceRepository;
 
 import java.util.Collections;
 import java.util.Set;
 
-public class SimpleDependencyRepository implements DependencyRepository
+public class SimpleReferenceRepository implements ReferenceRepository
 {
     private static final Set<ClassFile> EMPTY_SET = Collections.emptySet();
     private ClassPath classpath;
 
-    public SimpleDependencyRepository(ClassPath classpath)
+    public SimpleReferenceRepository(ClassPath classpath)
     {
         this.classpath = classpath;
     }
 
-    public Set<ClassFile> findDependenciesFor(ClassFile changedClass)
+    public Set<ClassFile> findReferencesTo(ClassFile changedClass)
     {
         String className = changedClass.getClassName();
 
