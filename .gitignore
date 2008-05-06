@@ -6,4 +6,5 @@ reports
 *iml
 .classpath
 .project
-
+.metadata
+*testng-customsuite.xml

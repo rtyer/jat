@@ -1,5 +1,6 @@
 package org.jatproject.autotest;
 
+import org.jatproject.autotest.junit4.JUnit4TestEngine;
 import org.jatproject.autotest.listeners.ConsoleTestListener;
 import org.jatproject.autotest.listeners.GrowlTestListener;
 import org.jatproject.autotest.repositories.SimpleReferenceRepository;
@@ -35,8 +36,8 @@ public class AutoTestRunner extends TimerTask
         {
             dependencies.addAll(repository.findReferencesTo(clazz));
         }
-
-        Tester tester = new Tester(new TestNGTestEngine());
+        TestEngine[] engines = {new TestNGTestEngine(), new JUnit4TestEngine()};
+        Tester tester = new Tester(engines);
         tester.addListener(new ConsoleTestListener());
         tester.addListener(new GrowlTestListener());
         tester.runTests(dependencies);        
