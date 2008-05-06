@@ -3,7 +3,6 @@ package org.jatproject.autotest.junit4;
 import org.jatproject.autotest.TestListener;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -11,62 +10,63 @@ import org.testng.annotations.BeforeMethod;
 public class JUnit4TestListenerTest {
 	private Mockery mockery;
 
-    @BeforeMethod
-    public void beforeEach()
-    {
-    	
-        mockery = new Mockery();
-    }
+	@AfterMethod
+	public void afterEach() {
+		mockery.assertIsSatisfied();
+	}
 
-    @AfterMethod
-    public void afterEach()
-    {
-        mockery.assertIsSatisfied();
-    }
+	@BeforeMethod
+	public void beforeEach() {
+		mockery = new Mockery();
+	}
 
-    public void shouldCallTestsStartedWhenTestRunStartedIsCalled() throws Exception
-    {
-        final TestListener listener = mockery.mock(TestListener.class);
+	public void shouldCallTestFailedWhenTestFailedIsCalled() throws Exception {
+		final TestListener listener = mockery.mock(TestListener.class);
+		final Failure failure = mockery.mock(Failure.class);
 
-        mockery.checking(new Expectations()
-        {{
-            one(listener).testsStarted();
-        }});
+		final String className = "className";
+		final String methodName = "methodName";
 
-        new JUnit4TestListener(listener).testRunStarted(null);
-    }
+		final Throwable throwable = new Exception();
+		mockery.checking(new Expectations() {
+			{
+				one(failure).getTestHeader();
+				will(returnValue(className + "." + methodName));
 
-    public void shouldCallTestsEndedWhenTestRunFinishedIsCalled() throws Exception
-    {
-        final TestListener listener = mockery.mock(TestListener.class);
+				one(failure).getException();
+				will(returnValue(throwable));
 
-        mockery.checking(new Expectations()
-        {{
-            one(listener).testsEnded();
-        }});
+				one(listener).testFailed(className + "." + methodName,
+						throwable);
+			}
+		});
 
-        new JUnit4TestListener(listener).testRunFinished(null);        
-    }
+		new JUnit4TestListener(listener).testFailure(failure);
+	}
 
+	public void shouldCallTestsEndedWhenTestRunFinishedIsCalled()
+			throws Exception {
+		final TestListener listener = mockery.mock(TestListener.class);
 
-    public void shouldCallTestFailedWhenOnTestFailureIsCalled() throws Exception
-    {
-        final TestListener listener = mockery.mock(TestListener.class);
-        final Failure failure = mockery.mock(Failure.class);
+		mockery.checking(new Expectations() {
+			{
+				one(listener).testsEnded();
+			}
+		});
 
-        final String className = "className";
-        final String methodName = "methodName";
+		new JUnit4TestListener(listener).testRunFinished(null);
+	}
 
-        final Throwable throwable = new Exception();
-        mockery.checking(new Expectations()
-        {{
-            one(failure).getTestHeader();will(returnValue(className+"."+methodName));
+	public void shouldCallTestsStartedWhenTestRunStartedIsCalled()
+			throws Exception {
+		final TestListener listener = mockery.mock(TestListener.class);
 
-            one(failure).getException();will(returnValue(throwable));
+		mockery.checking(new Expectations() {
+			{
+				one(listener).testsStarted();
+			}
+		});
 
-            one(listener).testFailed(className + "." + methodName, throwable);
-        }});
-
-        new JUnit4TestListener(listener).testFailure(failure);
-    }
+		new JUnit4TestListener(listener).testRunStarted(null);
+	}
 }
