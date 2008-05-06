@@ -24,7 +24,7 @@ define 'jat' do
    desc 'Auto Testing Framework for Java'
    define 'autotest' do
      compile.with TESTNG, COMMONS, LUCENE, JUNIT
-     test.with JMOCK, HAMCREST, CGLIB, OBJ
+     test.with JMOCK, HAMCREST, CGLIB, OBJ, JUNIT
      package :jar
      
      task('run', :test) do

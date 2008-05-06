@@ -20,9 +20,9 @@ public class JUnit4TestListener extends RunListener {
 	}
 
 	@Override
+	//this method is called whether the test passes or fails.  There is no testPassed equivalent.
 	public void testFinished(Description description) throws Exception {
 		super.testFinished(description);
-		listener.testPassed(description.getDisplayName());
 	}
 
 	@Override

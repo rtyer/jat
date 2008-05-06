@@ -24,7 +24,7 @@ public class JUnit4TestListenerTest {
         mockery.assertIsSatisfied();
     }
 
-    public void shouldCallTestsStartedWhenOnStartIsCalled() throws Exception
+    public void shouldCallTestsStartedWhenTestRunStartedIsCalled() throws Exception
     {
         final TestListener listener = mockery.mock(TestListener.class);
 
@@ -36,7 +36,7 @@ public class JUnit4TestListenerTest {
         new JUnit4TestListener(listener).testRunStarted(null);
     }
 
-    public void shouldCallTestsEndedWhenOnFinishIsCalled() throws Exception
+    public void shouldCallTestsEndedWhenTestRunFinishedIsCalled() throws Exception
     {
         final TestListener listener = mockery.mock(TestListener.class);
 
@@ -48,23 +48,6 @@ public class JUnit4TestListenerTest {
         new JUnit4TestListener(listener).testRunFinished(null);        
     }
 
-    public void shouldCallTestPassedWhenOnTestSuccessIsCalled() throws Exception
-    {
-        final TestListener listener = mockery.mock(TestListener.class);
-        final Description description = mockery.mock(Description.class);
-
-        final String className = "className";
-        final String methodName = "methodName";
-
-        mockery.checking(new Expectations()
-        {{
-            one(description).getDisplayName();will(returnValue(className+ "." + methodName));
-
-            one(listener).testPassed(className + "." + methodName);
-        }});
-
-        new JUnit4TestListener(listener).testFinished(description);
-    }
 
     public void shouldCallTestFailedWhenOnTestFailureIsCalled() throws Exception
     {
