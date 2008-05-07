@@ -10,13 +10,11 @@ public class ClassFile
 {
     private Classname classname;
     private File classFile;
-    private AutoTestClassLoader loader;
 
-    public ClassFile(Classname classname, File classFile, AutoTestClassLoader loader)
+    public ClassFile(Classname classname, File classFile)
     {
         this.classname = classname;
         this.classFile = classFile;
-        this.loader = loader;
     }
 
     public String getClassName()
