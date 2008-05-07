@@ -8,7 +8,6 @@ TESTNG = 'org.testng:testng:jar:jdk15:5.7'
 CGLIB = 'cglib:cglib-nodep:jar:2.1_3'
 OBJ = 'org.objenesis:objenesis:jar:1.1'
 COMMONS = 'commons-io:commons-io:jar:1.4'
-LUCENE = 'org.apache.lucene:lucene-core:jar:2.3.1'
 JUNIT = 'junit:junit:jar:4.4'
 
 repositories.remote << 'http://www.ibiblio.org/maven2'
@@ -23,7 +22,7 @@ define 'jat' do
    
    desc 'Auto Testing Framework for Java'
    define 'autotest' do
-     compile.with TESTNG, COMMONS, LUCENE, JUNIT
+     compile.with TESTNG, COMMONS, JUNIT
      test.with JMOCK, HAMCREST, CGLIB, OBJ, JUNIT
      package :jar
      
