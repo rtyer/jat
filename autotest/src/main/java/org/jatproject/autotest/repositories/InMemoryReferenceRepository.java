@@ -1,14 +1,14 @@
 package org.jatproject.autotest.repositories;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.jatproject.autotest.ClassFile;
 import org.jatproject.autotest.ClassPath;
 import org.jatproject.autotest.Classname;
 import org.jatproject.autotest.ReferenceRepository;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class InMemoryReferenceRepository implements ReferenceRepository{
 	private Map<String,Set<ClassFile>> dependencies;

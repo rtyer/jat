@@ -1,14 +1,14 @@
 package org.jatproject.autotest;
 
-import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.jatproject.autotest.junit4.JUnit4TestEngine;
 import org.jatproject.autotest.listeners.ConsoleTestListener;
 import org.jatproject.autotest.listeners.GrowlTestListener;
 import org.jatproject.autotest.repositories.SimpleReferenceRepository;
 import org.jatproject.autotest.testng.TestNGTestEngine;
+
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AutoTest 
 {
@@ -32,8 +32,10 @@ public class AutoTest
         {
             dependencies.addAll(repository.findReferencesTo(clazz));
         }
-        TestEngine[] engines = {new TestNGTestEngine(), new JUnit4TestEngine()};
-        Tester tester = new Tester(engines);
+
+        System.out.print(".");
+
+        Tester tester = new Tester(new TestNGTestEngine(), new JUnit4TestEngine());
         tester.addListener(new ConsoleTestListener());
         tester.addListener(new GrowlTestListener());
         tester.runTests(dependencies);

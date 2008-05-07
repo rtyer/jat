@@ -26,7 +26,13 @@ public class ClassFile
 
     public Class getClazz()
     {
-        return loader.loadClass(this);    
+        try
+        {
+            return Class.forName(getClassName(), true, ClassFile.class.getClassLoader());
+        } catch (ClassNotFoundException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     public void appendClass(List<Class> classes)
