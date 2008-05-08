@@ -9,11 +9,9 @@ import java.util.TimerTask;
 public class AutoTestRunner extends TimerTask
 {
     private long lastRunTime;
-    private File[] classDirs;
 
-    public AutoTestRunner(File[] classDirs)
+    public AutoTestRunner()
     {
-        this.classDirs = classDirs;
         lastRunTime = System.currentTimeMillis();
     }
 
@@ -21,13 +19,15 @@ public class AutoTestRunner extends TimerTask
     {
         try
         {
-            ClassLoader loader = new SystemClassPath().getIsolatedClassLoader();
+            SystemClassPath classpath = new SystemClassPath();
+            ClassLoader loader = classpath.getIsolatedClassLoader();
+
             Thread.currentThread().setContextClassLoader(loader);
             
             Class<?> autotestClass = Class.forName("org.jatproject.autotest.AutoTest", true, loader);
 
             Constructor constructor = autotestClass.getConstructor(File[].class);
-            Object object = constructor.newInstance(new Object[] {classDirs});
+            Object object = constructor.newInstance(new Object[] {classpath.getClassDirectories()});
             Method method = autotestClass.getMethod("run", long.class);
             lastRunTime = (Long) method.invoke(object, lastRunTime);
         } catch (Exception e)
@@ -38,8 +38,6 @@ public class AutoTestRunner extends TimerTask
     
     public static void main(String[] args)
     {
-        File classDir = new File(args[0]);
-        File testDir = new File(args[1]);
-        new Timer().schedule(new AutoTestRunner(new File[]{classDir, testDir}), 0, 10000);
+        new Timer().schedule(new AutoTestRunner(), 0, 10000);
     }
 }

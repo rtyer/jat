@@ -4,27 +4,47 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.net.URL;
 
 public class SystemClassPath
 {
-    public ParentLastUrlClassLoader getIsolatedClassLoader()
+    private final Set<File> files;
+    private final Set<File> classDirectories;
+
+    public SystemClassPath()
     {
-        List<File> files = new ArrayList<File>();
+        files = new HashSet<File>();
+        classDirectories = new HashSet<File>();
+
         for(String path : System.getProperty("java.class.path").split(File.pathSeparator))
         {
-            files.add(new File(path));
+            File file = new File(path);
+            if(file.exists() && file.canRead())
+            {
+                if(file.isDirectory()) classDirectories.add(file);
+                
+                files.add(file);
+            }
         }
+    }
 
-
+    public ParentLastUrlClassLoader getIsolatedClassLoader()
+    {
         try
         {
-            return new ParentLastUrlClassLoader(FileUtils.toURLs(FileUtils.convertFileCollectionToFileArray(files)));
+            URL[] urls = FileUtils.toURLs(FileUtils.convertFileCollectionToFileArray(files));
+            return new ParentLastUrlClassLoader(urls);
         }
         catch (IOException e)
         {
             throw new RuntimeException(e);
         }
+    }
+
+    public File[] getClassDirectories()
+    {
+        return classDirectories.toArray(new File[classDirectories.size()]);
     }
 }

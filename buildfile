@@ -27,7 +27,7 @@ define 'jat' do
      package :jar
      
      task('run', :test) do
-       Java::Commands.java('org.jatproject.autotest.AutoTestRunner', "#{compile.target}", "#{test.compile.target}", :classpath => test.dependencies)
+       Java::Commands.java('org.jatproject.autotest.AutoTestRunner', :classpath => test.dependencies)
      end
    end   
 end
