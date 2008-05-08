@@ -12,9 +12,9 @@ import java.util.Set;
 
 public class AutoTest 
 {
-	private File[] classDirectories;
+	private Set<File> classDirectories;
 
-	public AutoTest(File[] classDirectories)
+	public AutoTest(Set<File> classDirectories)
 	{
 		this.classDirectories = classDirectories;
 	}

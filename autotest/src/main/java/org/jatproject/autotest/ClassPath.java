@@ -16,9 +16,9 @@ public class ClassPath implements Iterable<ClassFile>
 {
     private static final IOFileFilter CLASS_FILE_FILTER = FileFilterUtils.suffixFileFilter(".class");
 
-    private File[] pathDirectories;
+    private Set<File> pathDirectories;
 
-    public ClassPath(File[] pathDirectories)
+    public ClassPath(Set<File> pathDirectories)
     {
         this.pathDirectories = pathDirectories;
     }

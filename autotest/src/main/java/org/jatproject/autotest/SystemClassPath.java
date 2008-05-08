@@ -43,8 +43,8 @@ public class SystemClassPath
         }
     }
 
-    public File[] getClassDirectories()
+    public Set<File> getClassDirectories()
     {
-        return classDirectories.toArray(new File[classDirectories.size()]);
+        return classDirectories;
     }
 }
