@@ -30,12 +30,12 @@ public class SystemClassPath
         }
     }
 
-    public ParentLastUrlClassLoader getIsolatedClassLoader()
+    public IsolatedClassLoader getIsolatedClassLoader()
     {
         try
         {
             URL[] urls = FileUtils.toURLs(FileUtils.convertFileCollectionToFileArray(files));
-            return new ParentLastUrlClassLoader(urls);
+            return new IsolatedClassLoader(urls);
         }
         catch (IOException e)
         {
