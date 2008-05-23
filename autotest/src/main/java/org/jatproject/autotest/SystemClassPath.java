@@ -13,18 +13,28 @@ public class SystemClassPath
     private final Set<File> files;
     private final Set<File> classDirectories;
 
-    public SystemClassPath()
+    public static Set<File> convertClassPathToFiles()
+    {
+        Set<File> files = new HashSet<File>();
+
+        for(String path : System.getProperty("java.class.path").split(File.pathSeparator))
+        {
+            files.add(new File(path));
+        }
+
+        return files;
+    }
+
+    public SystemClassPath(Set<File> pathElements)
     {
         files = new HashSet<File>();
         classDirectories = new HashSet<File>();
 
-        for(String path : System.getProperty("java.class.path").split(File.pathSeparator))
+        for(File file : pathElements)
         {
-            File file = new File(path);
             if(file.exists() && file.canRead())
             {
                 if(file.isDirectory()) classDirectories.add(file);
-                
                 files.add(file);
             }
         }
