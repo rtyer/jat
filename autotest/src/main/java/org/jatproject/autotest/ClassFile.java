@@ -5,6 +5,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 public class ClassFile
 {
@@ -65,5 +66,9 @@ public class ClassFile
         ClassFile classfile = (ClassFile) o;
         return this.getClassName() == classfile.getClassName();
     }
-    
+
+    public Set<ClassFile> getDependencies()
+    {
+        return null;
+    }
 }
