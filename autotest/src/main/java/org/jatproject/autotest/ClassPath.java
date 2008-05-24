@@ -33,7 +33,7 @@ public class ClassPath implements Iterable<ClassFile>
         File baseDirectory = findBaseDirectoryForClass(classname);
         if(baseDirectory == null) return null;
 
-        return new ClassFile(classname, new File(baseDirectory, classname.getClassFileName()));
+        return new ClassFile(this, classname, new File(baseDirectory, classname.getClassFileName()));
     }
 
     public Set<ClassFile> findChangesSince(long time)
@@ -56,7 +56,7 @@ public class ClassPath implements Iterable<ClassFile>
             Collection classFiles = FileUtils.listFiles(directory, filter, TrueFileFilter.INSTANCE);
             for(File classFile : FileUtils.convertFileCollectionToFileArray(classFiles))
             {
-                files.add(new ClassFile(new Classname(directory, classFile), classFile));
+                files.add(new ClassFile(this, new Classname(directory, classFile), classFile));
             }
         }
 

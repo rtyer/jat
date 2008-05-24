@@ -1,19 +1,22 @@
 package org.jatproject.autotest;
 
 import org.apache.commons.io.FileUtils;
+import org.jatproject.autotest.repositories.ClassDependencyExtractor;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ClassFile
 {
+    private ClassPath path;
     private Classname classname;
     private File classFile;
 
-    public ClassFile(Classname classname, File classFile)
+    public ClassFile(ClassPath path, Classname classname, File classFile)
     {
+        this.path = path;
         this.classname = classname;
         this.classFile = classFile;
     }
@@ -28,15 +31,11 @@ public class ClassFile
         try
         {
             return Class.forName(getClassName(), true, ClassFile.class.getClassLoader());
-        } catch (ClassNotFoundException e)
+        }
+        catch (ClassNotFoundException e)
         {
             throw new RuntimeException(e);
         }
-    }
-
-    public void appendClass(List<Class> classes)
-    {
-        classes.add(getClazz());
     }
 
     public byte[] getContents()
@@ -45,30 +44,41 @@ public class ClassFile
         {
             return FileUtils.readFileToByteArray(classFile);
         }
-        catch(IOException e)
+        catch (IOException e)
         {
             throw new RuntimeException(e);
         }
     }
-    public int hashCode(){
-    	return getClassName().hashCode();
+
+    public int hashCode()
+    {
+        return getClassName().hashCode();
     }
-    public boolean equals(Object o){
-        if(this == o)
+
+    public boolean equals(Object o)
+    {
+        if (this == o)
         {
             return true;
         }
-        if(o == null || getClass() != o.getClass())
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
 
         ClassFile classfile = (ClassFile) o;
-        return this.getClassName() == classfile.getClassName();
+        return this.getClassName().equals(classfile.getClassName());
     }
 
     public Set<ClassFile> getDependencies()
     {
-        return null;
+        Set<ClassFile> dependencies = new HashSet<ClassFile>();
+        for(String classname : new ClassDependencyExtractor(getContents()).getDependencies())
+        {
+            Classname name = new Classname(classname);
+            if(path.isOnPath(name)) dependencies.add(path.find(name));
+        }
+
+        return dependencies;
     }
 }
