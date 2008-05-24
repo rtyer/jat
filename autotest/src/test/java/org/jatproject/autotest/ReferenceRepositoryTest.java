@@ -1,7 +1,7 @@
 package org.jatproject.autotest;
 
 import org.jatproject.autotest.ClassFile;
-import org.jatproject.autotest.DependencyIndex;
+import org.jatproject.autotest.ReferenceRepository;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
@@ -16,7 +16,7 @@ import java.util.Set;
 
 @SuppressWarnings({"unchecked"})
 @Test
-public class DependencyIndexTest
+public class ReferenceRepositoryTest
 {
     private Mockery mockery;
 
@@ -40,7 +40,7 @@ public class DependencyIndexTest
     public void shouldReturnModifiedFile()
     {
         final ClassFile modified = mockery.mock(ClassFile.class);
-        DependencyIndex index = new DependencyIndex(Collections.<ClassFile>emptySet());
+        ReferenceRepository index = new ReferenceRepository(Collections.<ClassFile>emptySet());
 
         assertTrue(index.findReferencesTo(modified).contains(modified));
     }
@@ -55,7 +55,7 @@ public class DependencyIndexTest
             one(inPath).getDependencies(); will(returnValue(Collections.singleton(modified)));
         }});
 
-        DependencyIndex index = new DependencyIndex(Collections.singleton(inPath));
+        ReferenceRepository index = new ReferenceRepository(Collections.singleton(inPath));
         Set<ClassFile> references = index.findReferencesTo(modified);
 
         assertTrue(references.contains(modified));
@@ -77,7 +77,7 @@ public class DependencyIndexTest
         HashSet<ClassFile> classpath = new HashSet<ClassFile>();
         Collections.addAll(classpath, first, second);
 
-        DependencyIndex index = new DependencyIndex(classpath);
+        ReferenceRepository index = new ReferenceRepository(classpath);
         Set<ClassFile> references = index.findReferencesTo(modified);
 
         assertTrue(references.contains(modified));

@@ -3,7 +3,6 @@ package org.jatproject.autotest;
 import org.jatproject.autotest.junit4.JUnit4TestEngine;
 import org.jatproject.autotest.listeners.ConsoleTestListener;
 import org.jatproject.autotest.listeners.GrowlTestListener;
-import org.jatproject.autotest.DependencyIndex;
 import org.jatproject.autotest.testng.TestNGTestEngine;
 
 import java.io.File;
@@ -22,7 +21,7 @@ public class AutoTest
     public long run(long lastRunTime)
     {
         ClassPath classpath = new ClassPath(classDirectories);
-        ReferenceRepository repository = new DependencyIndex(classpath);
+        ReferenceRepository repository = new ReferenceRepository(classpath);
 
         Set<ClassFile> classpathChanges = classpath.findChangesSince(lastRunTime);
         long nextRunTime = System.currentTimeMillis();
