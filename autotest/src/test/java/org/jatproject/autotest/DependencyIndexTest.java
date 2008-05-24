@@ -1,6 +1,7 @@
-package org.jatproject.autotest.repositories;
+package org.jatproject.autotest;
 
 import org.jatproject.autotest.ClassFile;
+import org.jatproject.autotest.DependencyIndex;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;

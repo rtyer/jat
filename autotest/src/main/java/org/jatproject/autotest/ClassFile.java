@@ -1,7 +1,7 @@
 package org.jatproject.autotest;
 
 import org.apache.commons.io.FileUtils;
-import org.jatproject.autotest.repositories.ClassDependencyExtractor;
+import org.jatproject.autotest.ClassDependencyExtractor;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +50,18 @@ public class ClassFile
         }
     }
 
+    public Set<ClassFile> getDependencies()
+    {
+        Set<ClassFile> dependencies = new HashSet<ClassFile>();
+        for(String classname : new ClassDependencyExtractor(getContents()).getDependencies())
+        {
+            Classname name = new Classname(classname);
+            if(path.isOnPath(name)) dependencies.add(path.find(name));
+        }
+
+        return dependencies;
+    }
+
     public int hashCode()
     {
         return getClassName().hashCode();
@@ -68,17 +80,5 @@ public class ClassFile
 
         ClassFile classfile = (ClassFile) o;
         return this.getClassName().equals(classfile.getClassName());
-    }
-
-    public Set<ClassFile> getDependencies()
-    {
-        Set<ClassFile> dependencies = new HashSet<ClassFile>();
-        for(String classname : new ClassDependencyExtractor(getContents()).getDependencies())
-        {
-            Classname name = new Classname(classname);
-            if(path.isOnPath(name)) dependencies.add(path.find(name));
-        }
-
-        return dependencies;
     }
 }

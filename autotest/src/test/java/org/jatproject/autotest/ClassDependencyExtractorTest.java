@@ -1,8 +1,9 @@
-package org.jatproject.autotest.repositories;
+package org.jatproject.autotest;
 
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 import org.testng.annotations.Test;
+import org.jatproject.autotest.ClassDependencyExtractor;
 
 import java.util.Set;
 

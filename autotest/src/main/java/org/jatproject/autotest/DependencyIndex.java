@@ -1,4 +1,4 @@
-package org.jatproject.autotest.repositories;
+package org.jatproject.autotest;
 
 import org.jatproject.autotest.ClassFile;
 import org.jatproject.autotest.ReferenceRepository;
