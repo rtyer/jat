@@ -41,7 +41,7 @@ public class DependencyIndexTest
         final ClassFile modified = mockery.mock(ClassFile.class);
         DependencyIndex index = new DependencyIndex(Collections.<ClassFile>emptySet());
 
-        assertTrue(index.findReferences(modified).contains(modified));
+        assertTrue(index.findReferencesTo(modified).contains(modified));
     }
 
     public void shouldReturnReferencesToTheModifiedFile()
@@ -55,7 +55,7 @@ public class DependencyIndexTest
         }});
 
         DependencyIndex index = new DependencyIndex(Collections.singleton(inPath));
-        Set<ClassFile> references = index.findReferences(modified);
+        Set<ClassFile> references = index.findReferencesTo(modified);
 
         assertTrue(references.contains(modified));
         assertTrue(references.contains(inPath));
@@ -77,7 +77,7 @@ public class DependencyIndexTest
         Collections.addAll(classpath, first, second);
 
         DependencyIndex index = new DependencyIndex(classpath);
-        Set<ClassFile> references = index.findReferences(modified);
+        Set<ClassFile> references = index.findReferencesTo(modified);
 
         assertTrue(references.contains(modified));
         assertTrue(references.containsAll(classpath));

@@ -1,6 +1,7 @@
 package org.jatproject.autotest.repositories;
 
 import org.jatproject.autotest.ClassFile;
+import org.jatproject.autotest.ReferenceRepository;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class DependencyIndex
+public class DependencyIndex implements ReferenceRepository
 {
     private Map<ClassFile, Set<ClassFile>> index = new HashMap<ClassFile, Set<ClassFile>>();
 
@@ -30,7 +31,7 @@ public class DependencyIndex
         }
     }
 
-    public Set<ClassFile> findReferences(ClassFile modified)
+    public Set<ClassFile> findReferencesTo(ClassFile modified)
     {
         Set<ClassFile> references = new HashSet<ClassFile>();
         references.add(modified);
