@@ -1,7 +1,0 @@
-<suite name="JAT_TestSuite" verbose="1">
-<test name="AllTests">
-<packages>
-<package name="org.jatproject.*" />
-</packages>
-</test>
-</suite>
