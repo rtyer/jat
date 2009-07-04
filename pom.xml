@@ -4,7 +4,7 @@
 
     <groupId>org.jatproject</groupId>
     <artifactId>jat</artifactId>
-    <name>Example Project</name>
+    <name>JAT Project</name>
     <version>0.1</version>
 
     <dependencies>
